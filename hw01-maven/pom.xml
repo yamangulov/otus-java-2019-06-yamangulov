@@ -10,14 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>hw01-maven</artifactId>
-
-    <name>Maven</name>
-
-    <properties>
-        <com.google.guava.version>28.0-jre</com.google.guava.version>
-    </properties>
-
-    <packaging>jar</packaging>
+    <name>hw01-maven</name>
+    <description>Simple maven app with modules</description>
 
     <dependencies>
         <dependency>
@@ -26,6 +20,11 @@
             <version>${com.google.guava.version}</version>
         </dependency>
     </dependencies>
+
+
+    <packaging>jar</packaging>
+
+
 
     <build>
         <finalName>${project.name}</finalName>
