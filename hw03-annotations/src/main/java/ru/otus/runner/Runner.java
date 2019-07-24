@@ -31,54 +31,41 @@ public class Runner {
 
     public void run(Class<?> annotationsClass) {
 
+        int allTestsCounter = 0;
+        int successTestsCounter = 0;
+        int failedTestsCounter = 0;
+
         Method[] methods = annotationsClass.getDeclaredMethods();
 
         for (Method method : methods) {
 
             Annotation beforeAllAnnotation = method.getDeclaredAnnotation(BeforeAll.class);
+            Annotation beforeAnnotation = method.getDeclaredAnnotation(Before.class);
+            Annotation testAnnotation = method.getDeclaredAnnotation(Test.class);
+            Annotation afterAnnotation = method.getDeclaredAnnotation(After.class);
+            Annotation afterAllAnnotation = method.getDeclaredAnnotation(AfterAll.class);
 
             if (beforeAllAnnotation != null) {
                 this.methodBeforAllList.add(method);
             }
-        }
-
-        for (Method method : methods) {
-
-            Annotation beforeAnnotation = method.getDeclaredAnnotation(Before.class);
 
             if (beforeAnnotation != null) {
                 this.methodBeforeList.add(method);
             }
-        }
-
-        for (Method method : methods) {
-
-            Annotation testAnnotation = method.getDeclaredAnnotation(Test.class);
 
             if (testAnnotation != null) {
                 this.methodTestList.add(method);
             }
-        }
-
-        for (Method method : methods) {
-
-            Annotation afterAnnotation = method.getDeclaredAnnotation(After.class);
 
             if (afterAnnotation != null) {
                 this.methodAfterList.add(method);
             }
-        }
-
-        for (Method method : methods) {
-
-            Annotation afterAllAnnotation = method.getDeclaredAnnotation(AfterAll.class);
 
             if (afterAllAnnotation != null) {
                 this.methodAfterAllList.add(method);
             }
+
         }
-
-
 
         this.methodList.addAll(this.methodBeforAllList);
         this.methodTestList.forEach((value) -> {
@@ -97,12 +84,17 @@ public class Runner {
 
                 try {
                     value.invoke(null);
+                    successTestsCounter++;
                 } catch (IllegalAccessException | InvocationTargetException e) {
+                    failedTestsCounter++;
                     e.printStackTrace();
+                } finally {
+                    allTestsCounter++;
                 }
             }
 
             if(value.getAnnotation(Test.class) != null) {
+
                 if (testAnnotationCounter == 0) {
 
                     instance = newInstance(value.getDeclaringClass());
@@ -111,25 +103,39 @@ public class Runner {
                 } else if (testAnnotationCounter == 1) {
                     try {
                         value.invoke(instance);
-                        testAnnotationCounter++;
+                        successTestsCounter++;
                     } catch (IllegalAccessException | InvocationTargetException e) {
+                        failedTestsCounter++;
                         e.printStackTrace();
+                    } finally {
+                        testAnnotationCounter++;
+                        allTestsCounter++;
                     }
                 } else {
                     instance = null;
                     testAnnotationCounter = 0;
                 }
+
             }
 
             if(value.getAnnotation(Before.class) != null || value.getAnnotation(After.class) != null) {
                 try {
                     value.invoke(instance);
+                    successTestsCounter++;
                 } catch (IllegalAccessException | InvocationTargetException e) {
+                    failedTestsCounter++;
                     e.printStackTrace();
+                } finally {
+                    allTestsCounter++;
                 }
             }
 
         }
+
+        System.out.println();
+        System.out.println("Выполнено " + allTestsCounter + " тестов.");
+        System.out.println(successTestsCounter + " тестов пройдено успешно.");
+        System.out.println(failedTestsCounter + " тестов завершились с ошибками.");
 
     }
 
