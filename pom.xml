@@ -13,6 +13,7 @@
     <modules>
         <module>hw01-maven</module>
         <module>hw02-generics-collections</module>
+        <module>hw03-annotations</module>
     </modules>
 
     <description>Homeworks of Java developer course</description>
