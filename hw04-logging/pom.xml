@@ -23,11 +23,7 @@
             <artifactId>asm</artifactId>
             <version>${asm.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.ow2.asm</groupId>
-            <artifactId>asm-commons</artifactId>
-            <version>${asm.version}</version>
-        </dependency>
+
     </dependencies>
 
     <build>
@@ -43,7 +39,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ru.otus.Main</mainClass>
+                            <mainClass>ru.otus.Start</mainClass>
                         </manifest>
                         <manifestEntries>
                             <Premain-Class>ru.otus.logging.LoggingAgent</Premain-Class>
