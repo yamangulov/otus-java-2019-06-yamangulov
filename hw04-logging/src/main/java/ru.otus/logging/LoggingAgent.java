@@ -58,12 +58,13 @@ public class LoggingAgent {
     }
 
     private static byte[] addLogMethod(byte[] originalClass, String methodName, String className) {
+        //className = className.replace("/", ".");
         ClassReader cr = new ClassReader(originalClass);
         ClassWriter cw = new ClassWriter(cr, ClassWriter.COMPUTE_MAXS);
         ClassVisitor cv = new ClassVisitor(Opcodes.ASM5, cw) {
             @Override
             public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
-                if (name.equals(methodName)) {
+                if (name.equals(methodName.toString())) {
                     return super.visitMethod(access, methodName + "Logging", descriptor, signature, exceptions);
                 } else {
                     return super.visitMethod(access, name, descriptor, signature, exceptions);
@@ -72,7 +73,7 @@ public class LoggingAgent {
         };
         cr.accept(cv, Opcodes.ASM5);
 
-        MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, methodName, "(Ljava/lang/Integer;)V", null, null);
+        MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, methodName, "(Ljava/lang/String;)V", null, null);
 
         Handle handle = new Handle(
                 H_INVOKESTATIC,
@@ -83,13 +84,14 @@ public class LoggingAgent {
 
         mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
         mv.visitVarInsn(Opcodes.ALOAD, 1);
-        mv.visitInvokeDynamicInsn("makeConcatWithConstants", "(Ljava/lang/Integer;)Ljava/lang/Integer;", handle, "executed method: " + methodName + ", param: \u0001");
+        mv.visitInvokeDynamicInsn("makeConcatWithConstants", "(Ljava/lang/String;)Ljava/lang/String;", handle, "executed method: " + methodName + ", param: \u0001");
 
-        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/Integer;)V", false);
+        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
 
         mv.visitVarInsn(Opcodes.ALOAD, 0);
         mv.visitVarInsn(Opcodes.ALOAD, 1);
-        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, className, methodName + "Logging", "(Ljava/lang/Integer;)V", false);
+        System.out.println(className);
+        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, className, methodName + "Logging", "(Ljava/lang/String;)V", false);
 
         mv.visitInsn(Opcodes.RETURN);
         mv.visitMaxs(0, 0);
