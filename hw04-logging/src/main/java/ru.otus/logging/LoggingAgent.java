@@ -4,14 +4,11 @@ import org.objectweb.asm.*;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.lang.annotation.Annotation;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.Instrumentation;
 import java.lang.invoke.CallSite;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
-import java.lang.reflect.Method;
-import java.nio.ByteBuffer;
 import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +16,10 @@ import java.util.List;
 import static org.objectweb.asm.Opcodes.H_INVOKESTATIC;
 
 public class LoggingAgent {
+
+    public static List<String> methodsForLogging = new ArrayList<>();
+    public static List<String> parameterTypes = new ArrayList<>();
+
     public static void premain(String agentArgs, Instrumentation inst) {
         System.out.println("premain");
         inst.addTransformer(new ClassFileTransformer() {
@@ -28,15 +29,12 @@ public class LoggingAgent {
                                     ProtectionDomain protectionDomain,
                                     byte[] classfileBuffer) {
 
-                List<String> methodsForLogging = new ArrayList<>();
-                Class<?> aClass = new MyClassLoader().getClass(className, classfileBuffer, protectionDomain);
-                Method[] methods = aClass.getDeclaredMethods();
-                for (Method method : methods) {
-                    Annotation logAnnotation = method.getDeclaredAnnotation(Log.class);
-                    if (logAnnotation != null) {
-                        methodsForLogging.add(method.getName());
-                    }
-                }
+
+
+                ClassReader cr = new ClassReader(classfileBuffer);
+                ClassWriter cw = new ClassWriter(cr, ClassWriter.COMPUTE_MAXS);
+                ClassVisitor cv = new AnnotationScanner(Opcodes.ASM5, cw);
+                cr.accept(cv,0);
 
                 if (!methodsForLogging.isEmpty()) {
                     return addLogMethod(classfileBuffer, methodsForLogging, className);
@@ -45,15 +43,6 @@ public class LoggingAgent {
             }
         });
 
-    }
-
-
-    private static class MyClassLoader extends ClassLoader {
-        private Class getClass(String className, byte[] classfileBuffer, ProtectionDomain protectionDomain) {
-            String correctedClassName = className.replace("/", ".");
-            ByteBuffer byteBuffer = ByteBuffer.wrap(classfileBuffer);
-            return super.defineClass(correctedClassName, byteBuffer, protectionDomain);
-        }
     }
 
     private static byte[] addLogMethod(byte[] originalClass, List methodNames, String className) {
@@ -81,17 +70,22 @@ public class LoggingAgent {
 
         for (int i = 0; i < methodNames.size(); i++) {
             String methodName = methodNames.get(i).toString();
+            String parameterType = parameterTypes.get(i).toString();
 
-            MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, methodName, "(I)V", null, null);
+            Type parameterAsmType = Type.getType(parameterType);
+            int opcodesType = parameterAsmType.getOpcode(Opcodes.ILOAD);
+
+            MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, methodName, "(" + parameterType + ")V", null, null);
+
             mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-            mv.visitVarInsn(Opcodes.ILOAD, 1);
-            mv.visitInvokeDynamicInsn("makeConcatWithConstants", "(I)Ljava/lang/String;", handle, "executed method: " + methodName + ", param: \u0001");
+            mv.visitVarInsn(opcodesType, 1);
+            mv.visitInvokeDynamicInsn("makeConcatWithConstants", "(" + parameterType + ")Ljava/lang/String;", handle, "executed method: " + methodName + ", param: \u0001");
 
             mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
 
             mv.visitVarInsn(Opcodes.ALOAD, 0);
-            mv.visitVarInsn(Opcodes.ILOAD, 1);
-            mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, className, methodName + "Logging", "(I)V", false);
+            mv.visitVarInsn(opcodesType, 1);
+            mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, className, methodName + "Logging", "(" + parameterType + ")V", false);
 
             mv.visitInsn(Opcodes.RETURN);
             mv.visitMaxs(0, 0);
@@ -109,6 +103,40 @@ public class LoggingAgent {
             e.printStackTrace();
         }
         return finalClass;
+    }
+
+    public static class AnnotationScanner extends ClassVisitor{
+
+        private String lastCheckedMethod;
+        private String innerDesc;
+
+        public AnnotationScanner(int api){
+            super(api);
+        }
+
+        public AnnotationScanner(int api, ClassVisitor classVisitor) {
+            super(api, classVisitor);
+        }
+
+        @Override
+        public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+            lastCheckedMethod = name;
+            innerDesc = desc;
+            return new AnnotationScanner.MethodAnnotationScanner();
+        }
+
+        class MethodAnnotationScanner extends MethodVisitor{
+
+            MethodAnnotationScanner(){ super(Opcodes.ASM5); }
+
+            @Override
+            public AnnotationVisitor visitAnnotation(String desc, boolean visible){
+                methodsForLogging.add(lastCheckedMethod);
+                parameterTypes.add(innerDesc.replaceAll("\\(", "").replaceAll("\\)V", ""));
+                return super.visitAnnotation(desc, visible);
+            }
+        }
+
     }
 
 

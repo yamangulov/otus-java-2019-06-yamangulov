@@ -7,4 +7,9 @@ public class TestLogging {
     public void calculation(int param) {
         System.out.println("calculation has run!");
     }
+
+    @Log
+    public void calculationString(String param) {
+        System.out.println("calculationString has run!");
+    }
 }

@@ -8,6 +8,6 @@ public class Start {
         testLogging.calculation(555);
 
         TestLogging testLogging2 = new TestLogging();
-        testLogging2.calculation(666);
+        testLogging2.calculationString("666");
     }
 }
