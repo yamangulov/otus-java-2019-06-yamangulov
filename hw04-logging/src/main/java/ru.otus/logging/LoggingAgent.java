@@ -131,8 +131,10 @@ public class LoggingAgent {
 
             @Override
             public AnnotationVisitor visitAnnotation(String desc, boolean visible){
-                methodsForLogging.add(lastCheckedMethod);
-                parameterTypes.add(innerDesc.replaceAll("\\(", "").replaceAll("\\)V", ""));
+                if(desc.contains("Log")) {
+                    methodsForLogging.add(lastCheckedMethod);
+                    parameterTypes.add(innerDesc.replaceAll("\\(", "").replaceAll("\\)V", ""));
+                }
                 return super.visitAnnotation(desc, visible);
             }
         }
