@@ -131,7 +131,7 @@ public class LoggingAgent {
 
             @Override
             public AnnotationVisitor visitAnnotation(String desc, boolean visible){
-                if(desc.contains("Log")) {
+                if(desc.contains("Lru/otus/logging/Log;")) {
                     methodsForLogging.add(lastCheckedMethod);
                     parameterTypes.add(innerDesc.replaceAll("\\(", "").replaceAll("\\)V", ""));
                 }
