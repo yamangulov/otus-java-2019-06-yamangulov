@@ -1,0 +1,12 @@
+Garbage collector: G1 has had
+18 young collections numbers in 1410 ms
+1 old collections numbers in 511 ms
+
+Garbage collector: Serial GC has had
+7 young collections numbers in 1342 ms
+3 old collections numbers in 3617 ms
+
+Garbage collector: Parallel GC has had
+4 young collections numbers in 1907 ms
+3 old collections numbers in 9338 ms
+

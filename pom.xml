@@ -15,6 +15,7 @@
         <module>hw02-generics-collections</module>
         <module>hw03-annotations</module>
         <module>hw04-logging</module>
+        <module>hw05-gc</module>
     </modules>
 
     <description>Homeworks of Java developer course</description>
