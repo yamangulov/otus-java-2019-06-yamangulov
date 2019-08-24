@@ -2,10 +2,7 @@ package ru.otus.enums;
 
 import ru.otus.interfaces.IBanknotes;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public enum BanknotesRU implements IBanknotes {
     FIFTY(50),
