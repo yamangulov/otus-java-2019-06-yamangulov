@@ -16,6 +16,7 @@
         <module>hw03-annotations</module>
         <module>hw04-logging</module>
         <module>hw05-gc</module>
+        <module>hw06-atm</module>
     </modules>
 
     <description>Homeworks of Java developer course</description>
