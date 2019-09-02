@@ -17,6 +17,7 @@
         <module>hw04-logging</module>
         <module>hw05-gc</module>
         <module>hw06-atm</module>
+        <module>hw07-atm-department</module>
     </modules>
 
     <description>Homeworks of Java developer course</description>
