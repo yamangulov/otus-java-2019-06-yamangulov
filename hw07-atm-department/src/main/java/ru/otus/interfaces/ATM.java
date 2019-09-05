@@ -4,7 +4,7 @@ import ru.otus.classes.Cassette;
 
 import java.util.Map;
 
-public interface IATM {
+public interface ATM {
 
     void loadCassette(Cassette cassette);
 
@@ -12,9 +12,9 @@ public interface IATM {
 
     long getBalance();
 
-    boolean accept (Map<IBanknotes, Integer> banknotes);
+    boolean accept (Map<Banknotes, Integer> banknotes);
 
-    Map<IBanknotes, Integer> dispense(long requiredSum);
+    Map<Banknotes, Integer> dispense(long requiredSum);
 
-    Map<IBanknotes, Integer> dispenseRest();
+    Map<Banknotes, Integer> dispenseRest();
 }

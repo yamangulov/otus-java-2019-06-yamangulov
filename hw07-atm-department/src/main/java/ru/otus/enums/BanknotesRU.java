@@ -1,10 +1,10 @@
 package ru.otus.enums;
 
-import ru.otus.interfaces.IBanknotes;
+import ru.otus.interfaces.Banknotes;
 
 import java.util.HashMap;
 
-public enum BanknotesRU implements IBanknotes {
+public enum BanknotesRU implements Banknotes {
     FIFTY(50),
     HUNDRED(100),
     FIVE_HUNDRED(500),

@@ -1,11 +1,11 @@
 package ru.otus;
 
-import ru.otus.classes.ATM;
+import ru.otus.classes.ATMImpl;
 import ru.otus.classes.Cassette;
-import ru.otus.classes.Department;
+import ru.otus.classes.DepartmentImpl;
 import ru.otus.enums.BanknotesRU;
-import ru.otus.interfaces.IBanknotes;
-import ru.otus.interfaces.IDepartment;
+import ru.otus.interfaces.Banknotes;
+import ru.otus.interfaces.Department;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +14,9 @@ public class Start {
     public static void main(String[] args) {
 
         //начала рабочего дня, готовим банкоматы к работе
-        IDepartment department = new Department();
-        ATM atm1 = department.addATM();
-        ATM atm2 = department.addATM();
+        Department department = new DepartmentImpl();
+        ATMImpl atm1 = department.addATM();
+        ATMImpl atm2 = department.addATM();
         atm1.loadCassette(new Cassette(BanknotesRU.FIFTY.getValue(), 1000));
         atm2.loadSetCassettes();
         //запомним состояние департамента, реализуется паттерн memento
@@ -26,7 +26,7 @@ public class Start {
         System.out.println(atm2.getBalance());
 
         //создаем "пачку" банкнот, которую клиент вставляет в приемник банкнот
-        Map<IBanknotes, Integer> map = new HashMap<>();
+        Map<Banknotes, Integer> map = new HashMap<>();
         map.put(BanknotesRU.FIFTY, 10);
         map.put(BanknotesRU.THOUSAND, 10);
         map.put(BanknotesRU.FIVE_THOUSEND, 3);

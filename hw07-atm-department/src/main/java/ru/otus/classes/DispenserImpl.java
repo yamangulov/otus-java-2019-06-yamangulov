@@ -1,13 +1,14 @@
 package ru.otus.classes;
 
 import ru.otus.exceptions.NotEnoughMoneyException;
-import ru.otus.interfaces.IDispenser;
+import ru.otus.exceptions.NotSupportedBanknotesSet;
+import ru.otus.interfaces.Dispenser;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Dispenser implements IDispenser {
+public class DispenserImpl implements Dispenser {
 
     private Map<Long, Integer> storedBanknotes = new TreeMap<>(Collections.reverseOrder());
 
@@ -19,7 +20,13 @@ public class Dispenser implements IDispenser {
     public boolean accept(Map<Long, Integer> banknotes) {
         try {
             banknotes.forEach(((banknote, amount) -> {
-                storedBanknotes.put(banknote, storedBanknotes.get(banknote) + amount);
+                int storedBanknoteAmount;
+                if (storedBanknotes.get(banknote) != null) {
+                    storedBanknoteAmount = storedBanknotes.get(banknote);
+                } else {
+                    storedBanknoteAmount = 0;
+                }
+                storedBanknotes.put(banknote, storedBanknoteAmount + amount);
                 System.out.println("Принято банкнот номиналом " + banknote + " рублей: " + amount + " шт." );
             }));
             return true;
@@ -31,24 +38,18 @@ public class Dispenser implements IDispenser {
     }
 
 
-    /*
-    Метод dispense для получения набора выдаваемых купюр сильно упрощенный, так как в ДЗ не ставилось задачи получить
-    идеальную реализацию ATM, а только продемонстрировать применение паттернов. В реальности возможна ситуация, когда
-    запрошенная сумма меньше остатка в банкомате, но все же подобрать набор купюр из оставшихся в банкомате в поле
-    storedBanknotes невозможно. Тогда можно было бы реализовать еще одно исключение типа "банкомат не может выдать
-    запрошенную сумму по техническим причинам, вы можете получить сумму xxx рублей" (подсчитывается ближайшая
-    к запрошенной меньшая сумма, которая может быть выдана оставшимся в банкомате набором купюр). Но это достаточно
-    сложно и выходит за рамки ДЗ
-     */
+
     @Override
     public Map<Long, Integer> dispense(long requiredSum) {
         Map<Long, Integer> map = new TreeMap<>(Collections.reverseOrder());
+        Map<Long, Integer> newStoredBanknotes = new TreeMap<>(Collections.reverseOrder());
 
         try {
-            if (getBalance() < requiredSum) {
+            if (this.getBalance() < requiredSum) {
                 throw new NotEnoughMoneyException();
             }
             long sum = requiredSum;
+            long acceptedSum = 0;
             for (Map.Entry<Long, Integer> entry : storedBanknotes.entrySet()) {
                 Long banknote = entry.getKey();
                 Integer amount = entry.getValue();
@@ -57,15 +58,25 @@ public class Dispenser implements IDispenser {
                     numberOfBanknotes--;
                 }
                 sum = sum - numberOfBanknotes * banknote;
+                acceptedSum += numberOfBanknotes * banknote;
                 if (numberOfBanknotes > 0) {
                     map.put(banknote, numberOfBanknotes);
-                    storedBanknotes.put(banknote, storedBanknotes.get(banknote) - numberOfBanknotes);
-                    System.out.println("Выдано банкнот номиналом " + banknote + " рублей: " + numberOfBanknotes + " шт." );
+                    newStoredBanknotes.put(banknote, storedBanknotes.get(banknote) - numberOfBanknotes);
+                    System.out.println("Может быть выдано банкнот номиналом " + banknote + " рублей: " + numberOfBanknotes + " шт." );
                 }
-
+            }
+            if (acceptedSum < requiredSum) {
+                throw new NotSupportedBanknotesSet(acceptedSum);
+            } else {
+                newStoredBanknotes.forEach((banknote, amount) -> {
+                    storedBanknotes.put(banknote, amount);
+                });
+                System.out.println("Данный набор банкнот выдан");
             }
         } catch (NotEnoughMoneyException e) {
             e.printStackTrace();
+        } catch (NotSupportedBanknotesSet notSupportedBanknotesSet) {
+            notSupportedBanknotesSet.printStackTrace();
         }
 
         return map;

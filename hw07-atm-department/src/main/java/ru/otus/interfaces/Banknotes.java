@@ -1,5 +1,5 @@
 package ru.otus.interfaces;
 
-public interface IBanknotes {
+public interface Banknotes {
     long getValue();
 }

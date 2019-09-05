@@ -2,7 +2,7 @@ package ru.otus.interfaces;
 
 import java.util.Map;
 
-public interface IDispenser {
+public interface Dispenser {
 
     boolean accept(Map<Long, Integer> banknotes);
 

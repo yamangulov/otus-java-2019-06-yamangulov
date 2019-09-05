@@ -1,24 +1,28 @@
 package ru.otus.classes;
 
 import ru.otus.enums.BanknotesRU;
-import ru.otus.interfaces.IATM;
-import ru.otus.interfaces.IBanknotes;
+import ru.otus.interfaces.ATM;
+import ru.otus.interfaces.Banknotes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ATM implements IATM {
+public class ATMImpl implements ATM {
 
-    private Dispenser dispenser = new Dispenser();
+    private DispenserImpl dispenser = new DispenserImpl();
 
     private StateMemory departmentState;
 
-    public ATM() {
+    public DispenserImpl getDispenser() {
+        return dispenser;
     }
 
-    public ATM(StateMemory departmentState) {
+    public ATMImpl() {
+    }
+
+    public ATMImpl(StateMemory departmentState) {
         this.departmentState = departmentState;
     }
 
@@ -46,16 +50,16 @@ public class ATM implements IATM {
         }
     }
 
+    //примеры применения Adapter - банкомат принимает enum банкнот, но диспенсер оперирует уже long, чтобы мог работать TreeMap
+    //потому что ключ типа long поддерживает сортировку по нему, а ключ типа enum - было бы труднее сделать что-то для этого
+
     @Override
     public long getBalance() {
         return dispenser.getBalance();
     }
 
-    //примеры применения Adapter - банкомат принимает enum банкнот, но диспенсер оперирует уже long, чтобы мог работать TreeMap
-    //потому что ключ типа long поддерживает сортировку по нему, а ключ типа enum - было бы труднее сделать что-то для этого
-
     @Override
-    public boolean accept(Map<IBanknotes, Integer> banknotes) {
+    public boolean accept(Map<Banknotes, Integer> banknotes) {
         Map<Long, Integer> banknotesToValue = new HashMap<>();
         banknotes.forEach((banknote, amount) -> {
             banknotesToValue.put(banknote.getValue(), amount);
@@ -64,8 +68,8 @@ public class ATM implements IATM {
     }
 
     @Override
-    public Map<IBanknotes, Integer> dispense(long requiredSum) {
-        Map<IBanknotes, Integer> mapOfBanknotes = new HashMap<>();
+    public Map<Banknotes, Integer> dispense(long requiredSum) {
+        Map<Banknotes, Integer> mapOfBanknotes = new HashMap<>();
         Map<Long, Integer> mapOfBanknotesPerValue = dispenser.dispense(requiredSum);
         mapOfBanknotesPerValue.forEach((banknoteValue, amount) -> {
             mapOfBanknotes.put(BanknotesRU.getBanknote(banknoteValue), amount);
@@ -74,8 +78,8 @@ public class ATM implements IATM {
     }
 
     @Override
-    public Map<IBanknotes, Integer> dispenseRest() {
-        Map<IBanknotes, Integer> mapOfBanknotes = new HashMap<>();
+    public Map<Banknotes, Integer> dispenseRest() {
+        Map<Banknotes, Integer> mapOfBanknotes = new HashMap<>();
         Map<Long, Integer> mapOfBanknotesPerValue = dispenser.dispenseRest();
         mapOfBanknotesPerValue.forEach((banknoteValue, amount) -> {
             mapOfBanknotes.put(BanknotesRU.getBanknote(banknoteValue), amount);
