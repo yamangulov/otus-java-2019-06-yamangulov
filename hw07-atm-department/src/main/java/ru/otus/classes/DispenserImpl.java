@@ -1,5 +1,7 @@
 package ru.otus.classes;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.otus.exceptions.NotEnoughMoneyException;
 import ru.otus.exceptions.NotSupportedBanknotesSet;
 import ru.otus.interfaces.Dispenser;
@@ -9,6 +11,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class DispenserImpl implements Dispenser {
+
+    private static Logger logger = LoggerFactory.getLogger(DispenserImpl.class);
 
     private Map<Long, Integer> storedBanknotes = new TreeMap<>(Collections.reverseOrder());
 
@@ -27,11 +31,12 @@ public class DispenserImpl implements Dispenser {
                     storedBanknoteAmount = 0;
                 }
                 storedBanknotes.put(banknote, storedBanknoteAmount + amount);
-                System.out.println("Принято банкнот номиналом " + banknote + " рублей: " + amount + " шт." );
+                String message = "Принято банкнот номиналом " + banknote + " рублей: " + amount + " шт.";
+                logger.debug(message);
             }));
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error in method DispenserImpl.accept(): ", e);
             return false;
         }
 
@@ -62,7 +67,8 @@ public class DispenserImpl implements Dispenser {
                 if (numberOfBanknotes > 0) {
                     map.put(banknote, numberOfBanknotes);
                     newStoredBanknotes.put(banknote, storedBanknotes.get(banknote) - numberOfBanknotes);
-                    System.out.println("Может быть выдано банкнот номиналом " + banknote + " рублей: " + numberOfBanknotes + " шт." );
+                    String message = "Может быть выдано банкнот номиналом " + banknote + " рублей: " + numberOfBanknotes + " шт.";
+                    logger.debug(message);
                 }
             }
             if (acceptedSum < requiredSum) {
@@ -71,12 +77,13 @@ public class DispenserImpl implements Dispenser {
                 newStoredBanknotes.forEach((banknote, amount) -> {
                     storedBanknotes.put(banknote, amount);
                 });
-                System.out.println("Данный набор банкнот выдан");
+                String message = "Данный набор банкнот выдан";
+                logger.debug(message);
             }
         } catch (NotEnoughMoneyException e) {
-            e.printStackTrace();
+            logger.error("Error in method DispenserImpl.dispense(): ", e);
         } catch (NotSupportedBanknotesSet notSupportedBanknotesSet) {
-            notSupportedBanknotesSet.printStackTrace();
+            logger.error("Error in method DispenserImpl.dispense(): ", notSupportedBanknotesSet);
         }
 
         return map;
@@ -86,7 +93,8 @@ public class DispenserImpl implements Dispenser {
     public Map<Long, Integer> dispenseRest() {
         Map<Long, Integer> map = new TreeMap<>(Collections.reverseOrder());
         for (Map.Entry<Long, Integer> entry : storedBanknotes.entrySet()) {
-            System.out.println("Выдано банкнот номиналом " + entry.getKey() + " рублей: " + entry.getValue() + " шт." );
+            String message = "Выдано банкнот номиналом " + entry.getKey() + " рублей: " + entry.getValue() + " шт.";
+            logger.debug(message);
             map.put(entry.getKey(), entry.getValue());
             storedBanknotes.put(entry.getKey(), storedBanknotes.get(entry.getKey()) - entry.getValue());
         }
@@ -101,8 +109,7 @@ public class DispenserImpl implements Dispenser {
         return balance;
     }
 
-    //в обоих диспенсерах вывод sout просто имитирует выдачу, чтобы было видно, что и сколько выдано.
-    //а return возвращает Map - карту банкнот с указанным номиналом и кол-вом банкнот этого номинала - которую можно
+    //return возвращает Map - карту банкнот с указанным номиналом и кол-вом банкнот этого номинала - которую можно
     //использовать как данные для реального физического диспенсера, чтобы он знал - сколько чего выдать
 
 }

@@ -1,8 +1,11 @@
 package ru.otus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.otus.classes.ATMImpl;
 import ru.otus.classes.Cassette;
 import ru.otus.classes.DepartmentImpl;
+import ru.otus.classes.DispenserImpl;
 import ru.otus.enums.BanknotesRU;
 import ru.otus.interfaces.Banknotes;
 import ru.otus.interfaces.Department;
@@ -11,6 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Start {
+
+    private static Logger logger = LoggerFactory.getLogger(Start.class);
+
     public static void main(String[] args) {
 
         //начала рабочего дня, готовим банкоматы к работе
@@ -22,8 +28,8 @@ public class Start {
         //запомним состояние департамента, реализуется паттерн memento
         department.rememberState();
 
-        System.out.println(atm1.getBalance());
-        System.out.println(atm2.getBalance());
+        logger.debug(String.valueOf(atm1.getBalance()));
+        logger.debug(String.valueOf(atm2.getBalance()));
 
         //создаем "пачку" банкнот, которую клиент вставляет в приемник банкнот
         Map<Banknotes, Integer> map = new HashMap<>();
@@ -32,14 +38,14 @@ public class Start {
         map.put(BanknotesRU.FIVE_THOUSEND, 3);
         //клиент загружает пачку банкнот в приемник банкомата
         atm2.accept(map);
-        System.out.println(atm2.getBalance());
+        logger.debug(String.valueOf(atm2.getBalance()));
 
         //выдача требуемой суммы
         atm2.dispense(7350);
-        System.out.println(atm2.getBalance());
+        logger.debug(String.valueOf(atm2.getBalance()));
         //здесь будет исключение - денег недостаточно
         atm2.dispense(7350000);
-        System.out.println(atm2.getBalance());
+        logger.debug(String.valueOf(atm2.getBalance()));
 
         //забираем все деньги из банкоматов департамента, это mediator, я так думаю
         //мы не обращается напрямую к каждому отдельному банкомату, чтобы вызвать метод выдать остаток у него, а вызываем
@@ -47,14 +53,14 @@ public class Start {
         //поэтому департамент - это объект-посредник для атм
         department.dispenseTotalRest();
 
-        System.out.println(atm1.getBalance());
-        System.out.println(atm2.getBalance());
+        logger.debug(String.valueOf(atm1.getBalance()));
+        logger.debug(String.valueOf(atm2.getBalance()));
 
         //восстанавливаем первоначальное состояние банкоматов департамента
         department.undoState();
 
-        System.out.println(atm1.getBalance());
-        System.out.println(atm2.getBalance());
+        logger.debug(String.valueOf(atm1.getBalance()));
+        logger.debug(String.valueOf(atm2.getBalance()));
 
     }
 }

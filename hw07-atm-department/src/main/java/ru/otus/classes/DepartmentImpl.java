@@ -1,5 +1,7 @@
 package ru.otus.classes;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.otus.interfaces.Banknotes;
 import ru.otus.interfaces.Department;
 
@@ -8,7 +10,13 @@ import java.util.Map;
 
 public class DepartmentImpl implements Department {
 
+    private static Logger logger = LoggerFactory.getLogger(DepartmentImpl.class);
+
     private StateMemory departmentState = new StateMemory();
+
+    public StateMemory getDepartmentState() {
+        return departmentState;
+    }
 
     @Override
     public ATMImpl addATM() {
@@ -39,7 +47,8 @@ public class DepartmentImpl implements Department {
             }));
         }
         for (Map.Entry<Banknotes, Integer> entry : totalRest.entrySet()) {
-            System.out.println("Итого из всех банкоматов выдано банкнот номиналом " + entry.getKey().getValue() + " рублей: " + entry.getValue() + " шт." );
+            String message = "Итого из всех банкоматов выдано банкнот номиналом " + entry.getKey().getValue() + " рублей: " + entry.getValue() + " шт.";
+            logger.debug(message);
         }
         return totalRest;
     }
