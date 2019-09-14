@@ -12,7 +12,9 @@ public interface Department {
 
     Map<Banknotes, Integer> dispenseTotalRest();
 
-    void rememberState();
+    void saveState();
 
-    void undoState();
+    void saveModifiedState();
+
+    void restoreState();
 }
