@@ -87,6 +87,20 @@ public class JsonDIY {
         Field[] fields = obj.getClass().getDeclaredFields();
         for (Field field : fields) {
 
+            addFieldsToJsonValue(field, obj, builder);
+        }
+
+        Field[] parentFields = obj.getClass().getSuperclass().getDeclaredFields();
+
+        for (Field field : parentFields) {
+
+            addFieldsToJsonValue(field, obj, builder);
+        }
+        return builder.build();
+    }
+
+    private void addFieldsToJsonValue(Field field, Object obj, JsonObjectBuilder builder) {
+
             boolean isAccessible = field.canAccess(obj);
             if (!isAccessible) { field.setAccessible(true); }
 
@@ -99,9 +113,5 @@ public class JsonDIY {
             }
 
             if (!isAccessible) { field.setAccessible(false); }
-        }
-
-        return builder.build();
     }
-
 }

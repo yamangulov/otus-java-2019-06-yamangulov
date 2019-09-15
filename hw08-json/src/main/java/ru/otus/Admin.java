@@ -13,7 +13,6 @@ public class Admin extends Person {
     private Set<String> set = new HashSet<>();
     private Map<Integer, String> map = new HashMap<>();
     private List<Integer> list = new ArrayList<>();
-    private final static String staticStringField = "Static string field";
     private double d = 777d;
     private float f = 888f;
     private short sh = (short)35;

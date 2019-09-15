@@ -52,5 +52,11 @@ public class Start {
         Map<Integer, String> map = Collections.singletonMap(1, "one");
         System.out.println(gson.toJson(map));
         System.out.println(json.toJson(map));
+        Person person = new Person();
+        System.out.println(gson.toJson(person));
+        System.out.println(json.toJson(person));
+        Admin admin = new Admin();
+        System.out.println(gson.toJson(admin));
+        System.out.println(json.toJson(admin));
     }
 }
