@@ -1,5 +1,6 @@
 package ru.otus.classes;
 
+import ru.otus.classes.memento.Originator;
 import ru.otus.enums.BanknotesRU;
 import ru.otus.interfaces.ATM;
 import ru.otus.interfaces.Banknotes;
@@ -13,7 +14,7 @@ public class ATMImpl implements ATM {
 
     private DispenserImpl dispenser = new DispenserImpl();
 
-    private StateMemory departmentState;
+    private Originator departmentState;
 
     public DispenserImpl getDispenser() {
         return dispenser;
@@ -22,7 +23,7 @@ public class ATMImpl implements ATM {
     public ATMImpl() {
     }
 
-    public ATMImpl(StateMemory departmentState) {
+    public ATMImpl(Originator departmentState) {
         this.departmentState = departmentState;
     }
 

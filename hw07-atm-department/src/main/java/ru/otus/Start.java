@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import ru.otus.classes.ATMImpl;
 import ru.otus.classes.Cassette;
 import ru.otus.classes.DepartmentImpl;
-import ru.otus.classes.DispenserImpl;
 import ru.otus.enums.BanknotesRU;
 import ru.otus.interfaces.Banknotes;
 import ru.otus.interfaces.Department;
@@ -26,7 +25,7 @@ public class Start {
         atm1.loadCassette(new Cassette(BanknotesRU.FIFTY.getValue(), 1000));
         atm2.loadSetCassettes();
         //запомним состояние департамента, реализуется паттерн memento
-        department.rememberState();
+        department.saveState();
 
         logger.debug(String.valueOf(atm1.getBalance()));
         logger.debug(String.valueOf(atm2.getBalance()));
@@ -57,7 +56,7 @@ public class Start {
         logger.debug(String.valueOf(atm2.getBalance()));
 
         //восстанавливаем первоначальное состояние банкоматов департамента
-        department.undoState();
+        department.restoreState();
 
         logger.debug(String.valueOf(atm1.getBalance()));
         logger.debug(String.valueOf(atm2.getBalance()));

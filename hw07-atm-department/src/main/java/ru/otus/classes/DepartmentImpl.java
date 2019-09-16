@@ -2,6 +2,8 @@ package ru.otus.classes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.otus.classes.memento.Caretaker;
+import ru.otus.classes.memento.Originator;
 import ru.otus.interfaces.Banknotes;
 import ru.otus.interfaces.Department;
 
@@ -12,29 +14,33 @@ public class DepartmentImpl implements Department {
 
     private static Logger logger = LoggerFactory.getLogger(DepartmentImpl.class);
 
-    private StateMemory departmentState = new StateMemory();
+    private Originator originator = new Originator();
+    private Caretaker caretaker = new Caretaker();
 
-    public StateMemory getDepartmentState() {
-        return departmentState;
+    public Originator getOriginator() {
+        return originator;
     }
+
+
+
 
     @Override
     public ATMImpl addATM() {
-        ATMImpl atm = new ATMImpl(departmentState);
-        departmentState.rememberATM(atm);
+        ATMImpl atm = new ATMImpl(originator);
+        originator.rememberATM(atm);
         return atm;
     }
 
     @Override
     public ATMImpl addATM(ATMImpl atm) {
-        departmentState.rememberATM(atm);
+        originator.rememberATM(atm);
         return atm;
     }
 
     @Override
     public Map<Banknotes, Integer> dispenseTotalRest() {
         Map<Banknotes, Integer> totalRest = new HashMap<>();
-        for (ATMImpl atm : departmentState.getAtms()) {
+        for (ATMImpl atm : originator.getAtmsState()) {
             Map<Banknotes, Integer> rest = atm.dispenseRest();
             rest.forEach(((banknote, amount) -> {
                 Integer initialAmount;
@@ -55,25 +61,30 @@ public class DepartmentImpl implements Department {
 
 
     @Override
-    public void undoState() {
-        for (ATMImpl atm : departmentState.getInitAtms()) {
-            if (!departmentState.getAtms().contains(atm)) {
+    public void restoreState() {
+        originator.restoreState(caretaker.getMemento());
+        for (ATMImpl atm : originator.getAtmsState()) {
+            if (!originator.getAtmsState().contains(atm)) {
                 this.addATM(atm);
             }
         }
-        for (ATMImpl atm : departmentState.getAtms()) {
-            Map<Long, Integer> cassettes = departmentState.getInitAtmCassetes().get(atm);
+        for (ATMImpl atm : originator.getAtmsState()) {
+            Map<Long, Integer> cassettes = originator.getAtmCassettesState().get(atm);
             for (Map.Entry<Long, Integer> cassette : cassettes.entrySet()) {
                 atm.loadCassette(new Cassette(cassette.getKey(), cassette.getValue()));
             }
         }
-        departmentState.setAtms(departmentState.getInitAtms());
-        departmentState.setAtmCassetes(departmentState.getInitAtmCassetes());
     }
 
     @Override
-    public void rememberState() {
-        departmentState.setInitAtms(departmentState.getAtms());
-        departmentState.setInitAtmCassetes(departmentState.getAtmCassetes());
+    public void saveState() {
+        caretaker.setMemento(originator.saveState());
+    }
+
+    //используется, когда хочется сохранить промежуточное состояние департамента, а не состояние в начале дня
+    //в Start не использован, но есть использование в тесте для этого метода
+    @Override
+    public void saveModifiedState() {
+        caretaker.setMemento(originator.saveModifiedState(caretaker.getMemento()));
     }
 }
