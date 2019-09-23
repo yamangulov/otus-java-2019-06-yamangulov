@@ -9,6 +9,6 @@ public interface RequestBuilder<T> {
 
     String update(T objectData);
 
-    <T> T select(long id, Class<? extends T> clazz);
+    String select(long id, Class<T> clazz);
 
 }

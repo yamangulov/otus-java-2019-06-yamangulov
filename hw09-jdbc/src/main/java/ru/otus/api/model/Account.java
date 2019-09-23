@@ -21,9 +21,6 @@ public class Account {
     @Type(type = H2DataType.NUMBER)
     private BigDecimal number;
 
-    public Account() {
-    }
-
     public Account(long no, String type, BigDecimal number) {
         this.no = no;
         this.type = type;

@@ -24,14 +24,12 @@ public class EntityDaoJdbc<T> implements EntityDao<T> {
 
     @Override
     public void create(T objectData) throws SQLException {
-        try (Connection connection = sessionManager.getCurrentSession().getConnection()) {
-            dbExecutor.createTable(connection, objectData);
-        }
+        dbExecutor.createTable(objectData);
         dbExecutor.create(objectData);
     }
 
     @Override
-    public void update(T objectData) {
+    public void update(T objectData) throws SQLException {
         dbExecutor.update(objectData);
     }
 

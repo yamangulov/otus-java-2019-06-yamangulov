@@ -9,7 +9,7 @@ public interface EntityDao<T> {
 
     void create(T objectData) throws SQLException;
 
-    void update(T objectData);
+    void update(T objectData) throws SQLException;
 
     void createOrUpdate(T objectData);
 

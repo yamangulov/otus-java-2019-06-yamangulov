@@ -19,9 +19,6 @@ public class User {
     @Size(size = 3)
     private int age;
 
-    public User() {
-    }
-
     public User(int id, String name, int age) {
         this.id = id;
         this.name = name;
