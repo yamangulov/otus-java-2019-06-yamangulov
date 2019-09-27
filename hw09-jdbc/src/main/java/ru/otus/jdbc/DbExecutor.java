@@ -8,6 +8,7 @@ import ru.otus.jdbc.helpers.RequestBuilderImpl;
 import ru.otus.jdbc.sessionmanager.SessionManagerJdbc;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 
@@ -21,14 +22,19 @@ public class DbExecutor<T> {
     public DbExecutor(SessionManagerJdbc sessionManager) {
         this.requestBuilder =  new RequestBuilderImpl<>();
         this.sessionManager = sessionManager;
-        this.connection = sessionManager.getCurrentSession().getConnection();
+        sessionManager.beginSession();
+        this.connection = this.sessionManager.getCurrentSession().getConnection();
     }
 
     public void createTable(T objectData) throws SQLException {
         Savepoint savepoint = connection.setSavepoint("Попытка создать таблицу для класса " + objectData.getClass().getSimpleName());
         String request = requestBuilder.createTable(objectData);
         try (PreparedStatement pst = connection.prepareStatement(request)) {
-            pst.executeUpdate();
+            //int result = pst.executeUpdate();
+            logger.info("connection: {}", connection.getMetaData());
+            logger.info("request: {}", request);
+            boolean result = pst.execute();
+            logger.info("result of pst.execute {}: ", result);
         } catch (SQLException ex) {
             connection.rollback(savepoint);
             logger.error(ex.getMessage(), ex);
@@ -40,6 +46,16 @@ public class DbExecutor<T> {
         Savepoint savepoint = connection.setSavepoint("Попытка записать экземпляр класса " + objectData.getClass().getSimpleName() + " в БД");
         String request = requestBuilder.insert(objectData);
         try (PreparedStatement pst = connection.prepareStatement(request)) {
+            Field[] fields = objectData.getClass().getDeclaredFields();
+            for (int i = 0; i < fields.length; i++) {
+                try {
+                    fields[i].setAccessible(true);
+                    Object fieldValue = fields[i].get(objectData);
+                    pst.setObject(i + 1, fieldValue);
+                } catch (IllegalAccessException ex) {
+                    logger.error(ex.getMessage(), ex);
+                }
+            }
             pst.executeUpdate();
         } catch (SQLException ex) {
             connection.rollback(savepoint);
@@ -52,6 +68,15 @@ public class DbExecutor<T> {
         Savepoint savepoint = connection.setSavepoint("Попытка обновить данные экземпляра класса " + objectData.getClass().getSimpleName() + " в БД");
         String request = requestBuilder.update(objectData);
         try (PreparedStatement pst = connection.prepareStatement(request)) {
+            Field[] fields = objectData.getClass().getDeclaredFields();
+            for (int i = 1; i < fields.length; i++) {
+                try {
+                    Object fieldValue = fields[i].get(objectData.getClass());
+                    pst.setObject(i, fieldValue);
+                } catch (IllegalAccessException ex) {
+                    logger.error(ex.getMessage(), ex);
+                }
+            }
             pst.executeUpdate();
         } catch (SQLException ex) {
             connection.rollback(savepoint);
@@ -69,9 +94,10 @@ public class DbExecutor<T> {
     }
 
     public T load(long id, Class<T> clazz) throws SQLException {
-        Savepoint savepoint = connection.setSavepoint("Попытка получить данные экземпляра класса " + clazz.getSimpleName() + " из БД");
+        Savepoint savepoint = connection.setSavepoint("Попытка получить данные экземпляра класса " + clazz.getSimpleName() + " из БД и создать из них экземпляр класса");
         String request = requestBuilder.select(id, clazz);
         try (PreparedStatement pst = connection.prepareStatement(request)) {
+            pst.setLong(1, id);
             ResultSet rs = pst.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             Object[] params = new Object[rsmd.getColumnCount()];

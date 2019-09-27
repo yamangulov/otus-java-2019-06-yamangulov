@@ -44,7 +44,7 @@ public class EntityDaoJdbc<T> implements EntityDao<T> {
     }
 
     @Override
-    public <T> T load(long id, Class<T> clazz) {
+    public T load(long id, Class<T> clazz) {
         try {
             return dbExecutor.load(id, clazz);
         } catch (Exception e) {

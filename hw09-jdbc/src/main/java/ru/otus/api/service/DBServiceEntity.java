@@ -7,5 +7,5 @@ public interface DBServiceEntity<T> {
 
     void createOrUpdateEntity(T objectData);
 
-    <T> T getEntity(long id, Class<T> clazz);
+    T getEntity(long id, Class<T> clazz);
 }

@@ -13,7 +13,7 @@ public interface EntityDao<T> {
 
     void createOrUpdate(T objectData);
 
-    <T> T load(long id, Class<T> clazz);
+    T load(long id, Class<T> clazz);
 
     SessionManager getSessionManager();
 }

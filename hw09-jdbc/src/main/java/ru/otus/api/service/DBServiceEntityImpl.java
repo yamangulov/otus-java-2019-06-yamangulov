@@ -61,7 +61,7 @@ public class DBServiceEntityImpl<T> implements DBServiceEntity<T> {
     }
 
     @Override
-    public <T> T getEntity(long id, Class<T> clazz) {
+    public T getEntity(long id, Class<T> clazz) {
         try(SessionManager sessionManager = entityDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
