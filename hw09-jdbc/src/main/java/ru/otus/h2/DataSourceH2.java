@@ -8,7 +8,8 @@ import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class DataSourceH2 implements DataSource {
-    private static final String URL = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
+    //private static final String URL = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
+    private static final String URL = "jdbc:h2:tcp://localhost/~/test;DB_CLOSE_DELAY=-1";
 
     @Override
     public Connection getConnection() throws SQLException {
@@ -18,8 +19,10 @@ public class DataSourceH2 implements DataSource {
     }
 
     @Override
-    public Connection getConnection(String username, String password) {
-        return null;
+    public Connection getConnection(String username, String password) throws SQLException {
+        var connection = DriverManager.getConnection(URL, username, password);
+        connection.setAutoCommit(false);
+        return connection;
     }
 
     @Override

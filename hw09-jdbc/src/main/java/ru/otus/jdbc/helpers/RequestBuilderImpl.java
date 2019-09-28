@@ -57,7 +57,11 @@ public class RequestBuilderImpl<T> implements RequestBuilder<T> {
         stringBuilder.append(") values (");
         for (int i = 0; i < fields.length; i++) {
             String delimiter = (i != fields.length - 1) ? ", " : "";
-            stringBuilder.append("?");
+            if (fields[i].isAnnotationPresent(Id.class)) {
+                stringBuilder.append("default");
+            } else {
+                stringBuilder.append("?");
+            }
             stringBuilder.append(delimiter);
         }
         stringBuilder.append(");");
@@ -79,11 +83,11 @@ public class RequestBuilderImpl<T> implements RequestBuilder<T> {
             stringBuilder.append(delimiter);
         }
         try {
-            Object valueOfFieldAnnotetedById = fields[0].get(objectData.getClass());
+            fields[0].setAccessible(true);
             stringBuilder.append("where ");
             stringBuilder.append(fields[0].getName());
             stringBuilder.append(" = ");
-            stringBuilder.append(valueOfFieldAnnotetedById);
+            stringBuilder.append(fields[0].getLong(objectData));
             return stringBuilder.toString();
         } catch (IllegalAccessException ex) {
             logger.error(ex.getMessage(), ex);
@@ -102,7 +106,7 @@ public class RequestBuilderImpl<T> implements RequestBuilder<T> {
         }
         try {
             if (!fieldAnnotatedById.isEmpty()) {
-                return "select * from " + clazz.getSimpleName() + " where " + fieldAnnotatedById + " = ?";
+                return "select * from " + clazz.getSimpleName() + " where " + fieldAnnotatedById + " = ?;";
             }
             throw new NotValidClassException("Данный класс не содержит аннотацию Id и не представлен таблицей в БД");
         } catch (NotValidClassException ex) {

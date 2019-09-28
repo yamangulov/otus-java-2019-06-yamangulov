@@ -37,5 +37,17 @@ public class Start {
 
         dbServiceEntityUser.createEntity(originalUser);
         dbServiceEntityAccount.createEntity(originalAccount);
+
+        originalUser.setAge(60);
+        originalAccount.setNumber(BigDecimal.valueOf(666));
+
+        dbServiceEntityUser.updateEntity(originalUser);
+        dbServiceEntityAccount.updateEntity(originalAccount);
+
+        User user = dbServiceEntityUser.getEntity(1, User.class);
+        Account account = dbServiceEntityAccount.getEntity(1, Account.class);
+        logger.info("user: {}", user.getAge());
+        logger.info("account: {}", account.getNumber());
+
     }
 }

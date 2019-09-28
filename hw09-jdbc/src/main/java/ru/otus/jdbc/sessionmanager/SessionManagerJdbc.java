@@ -24,7 +24,7 @@ public class SessionManagerJdbc implements SessionManager {
   @Override
   public void beginSession() {
     try {
-      connection = dataSource.getConnection();
+      connection = dataSource.getConnection("sa", "sa");
       databaseSession = new DatabaseSessionJdbc(connection);
     } catch (SQLException e) {
       throw new SessionManagerException(e);
