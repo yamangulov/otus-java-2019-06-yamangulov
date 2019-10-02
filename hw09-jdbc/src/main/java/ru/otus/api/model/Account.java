@@ -14,6 +14,7 @@ public class Account {
     @Size(size = 20)
     private long no;
 
+    //@Id
     @Type
     @Size
     private String type;

@@ -68,7 +68,6 @@ public class DbExecutor<T> {
         connection = sessionManager.getCurrentSession().getConnection();
         Savepoint savepoint = connection.setSavepoint("Попытка обновить данные экземпляра класса " + objectData.getClass().getSimpleName() + " в БД");
         String request = requestBuilder.update(objectData);
-        logger.info("request for update: {}", request);
         try (PreparedStatement pst = connection.prepareStatement(request, Statement.RETURN_GENERATED_KEYS)) {
             Field[] fields = objectData.getClass().getDeclaredFields();
             for (int i = 1; i < fields.length; i++) {

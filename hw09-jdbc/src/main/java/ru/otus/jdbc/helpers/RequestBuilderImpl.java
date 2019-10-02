@@ -16,6 +16,9 @@ public class RequestBuilderImpl<T> implements RequestBuilder<T> {
         String request = "create table if not exists " + objectData.getClass().getSimpleName() + " (";
         StringBuilder stringBuilder = new StringBuilder(request);
         Field[] fields = objectData.getClass().getDeclaredFields();
+        if (!checkAnnotationsIdCount(fields)) {
+            throw new NotValidClassException("Данный класс не содержит аннотацию Id либо имеет более одной аннотации Id и поэтому не может быть представлен таблицей в БД");
+        }
         for (int i = 0; i < fields.length; i++) {
             String fieldName = fields[i].getName() + " ";
             String type = fields[i].getAnnotation(Type.class).type().toString();
@@ -48,6 +51,9 @@ public class RequestBuilderImpl<T> implements RequestBuilder<T> {
         String request = "insert into " + objectData.getClass().getSimpleName() + " (";
         StringBuilder stringBuilder = new StringBuilder(request);
         Field[] fields = objectData.getClass().getDeclaredFields();
+        if (!checkAnnotationsIdCount(fields)) {
+            throw new NotValidClassException("Данный класс не содержит аннотацию Id либо имеет более одной аннотации Id и поэтому не представлен таблицей в БД");
+        }
         for (int i = 0; i < fields.length; i++) {
             String fieldName = fields[i].getName();
             String delimiter = (i != fields.length - 1) ? ", " : "";
@@ -75,6 +81,9 @@ public class RequestBuilderImpl<T> implements RequestBuilder<T> {
         String request = "update " + objectData.getClass().getSimpleName() + " set ";
         StringBuilder stringBuilder = new StringBuilder(request);
         Field[] fields = objectData.getClass().getDeclaredFields();
+        if (!checkAnnotationsIdCount(fields)) {
+            throw new NotValidClassException("Данный класс не содержит аннотацию Id либо имеет более одной аннотации Id и поэтому не представлен таблицей в БД");
+        }
         for (int i = 1; i < fields.length; i++) {
             String fieldName = fields[i].getName();
             String delimiter = (i != fields.length - 1) ? ", " : " ";
@@ -98,6 +107,9 @@ public class RequestBuilderImpl<T> implements RequestBuilder<T> {
     @Override
     public String select(long id, Class<T> clazz) {
         Field[] fields = clazz.getDeclaredFields();
+        if (!checkAnnotationsIdCount(fields)) {
+            throw new NotValidClassException("Данный класс не содержит аннотацию Id либо имеет более одной аннотации Id и поэтому не представлен таблицей в БД");
+        }
         String fieldAnnotatedById = "";
         for (Field field : fields) {
             if (field.isAnnotationPresent(Id.class)) {
@@ -108,10 +120,22 @@ public class RequestBuilderImpl<T> implements RequestBuilder<T> {
             if (!fieldAnnotatedById.isEmpty()) {
                 return "select * from " + clazz.getSimpleName() + " where " + fieldAnnotatedById + " = ?;";
             }
-            throw new NotValidClassException("Данный класс не содержит аннотацию Id и не представлен таблицей в БД");
         } catch (NotValidClassException ex) {
             logger.error(ex.getMessage(), ex);
         }
         return null;
+    }
+
+    private boolean checkAnnotationsIdCount(Field[] fields) {
+        int count = 0;
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(Id.class)) {
+                count++;
+            }
+        }
+        if (count == 1) {
+            return true;
+        }
+        return false;
     }
 }
