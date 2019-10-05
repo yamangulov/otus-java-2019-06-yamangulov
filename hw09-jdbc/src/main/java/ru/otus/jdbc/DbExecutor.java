@@ -70,7 +70,10 @@ public class DbExecutor<T> {
         String request = requestBuilder.update(objectData);
         try (PreparedStatement pst = connection.prepareStatement(request, Statement.RETURN_GENERATED_KEYS)) {
             Field[] fields = objectData.getClass().getDeclaredFields();
-            for (int i = 1; i < fields.length; i++) {
+            for (int i = 0; i < fields.length; i++) {
+                if (fields[i].isAnnotationPresent(Id.class)) {
+                    continue;
+                }
                 try {
                     fields[i].setAccessible(true);
                     Object fieldValue = fields[i].get(objectData);

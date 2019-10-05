@@ -84,19 +84,27 @@ public class RequestBuilderImpl<T> implements RequestBuilder<T> {
         if (!checkAnnotationsIdCount(fields)) {
             throw new NotValidClassException("Данный класс не содержит аннотацию Id либо имеет более одной аннотации Id и поэтому не представлен таблицей в БД");
         }
-        for (int i = 1; i < fields.length; i++) {
-            String fieldName = fields[i].getName();
-            String delimiter = (i != fields.length - 1) ? ", " : " ";
-            stringBuilder.append(fieldName);
-            stringBuilder.append(" = ?");
-            stringBuilder.append(delimiter);
+        int indexForIdAnnotatedField = 0;
+        for (int i = 0; i < fields.length; i++) {
+            if (fields[i].isAnnotationPresent(Id.class)) {
+                indexForIdAnnotatedField = i;
+            }
+        }
+        for (int i = 0; i < fields.length; i++) {
+            if (i != indexForIdAnnotatedField) {
+                String fieldName = fields[i].getName();
+                String delimiter = (i != fields.length - 1) ? ", " : " ";
+                stringBuilder.append(fieldName);
+                stringBuilder.append(" = ?");
+                stringBuilder.append(delimiter);
+            }
         }
         try {
-            fields[0].setAccessible(true);
+            fields[indexForIdAnnotatedField].setAccessible(true);
             stringBuilder.append("where ");
-            stringBuilder.append(fields[0].getName());
+            stringBuilder.append(fields[indexForIdAnnotatedField].getName());
             stringBuilder.append(" = ");
-            stringBuilder.append(fields[0].getLong(objectData));
+            stringBuilder.append(fields[indexForIdAnnotatedField].getLong(objectData));
             return stringBuilder.toString();
         } catch (IllegalAccessException ex) {
             logger.error(ex.getMessage(), ex);
