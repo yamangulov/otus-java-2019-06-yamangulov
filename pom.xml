@@ -19,6 +19,7 @@
         <module>hw06-atm</module>
         <module>hw07-atm-department</module>
         <module>hw08-json</module>
+        <module>hw09-jdbc</module>
     </modules>
 
     <description>Homeworks of Java developer course</description>
