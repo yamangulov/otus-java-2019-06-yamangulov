@@ -25,7 +25,6 @@ import static org.mockito.Mockito.*;
 
 @DisplayName("Сервис для работы с пользователями в рамках БД должен ")
 @ExtendWith(MockitoExtension.class)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class DBServiceEntityImplTest {
 
     private static final long USER_ID = 1L;
@@ -53,7 +52,6 @@ class DBServiceEntityImplTest {
     }
 
     @Test
-    @Order(1)
     @DisplayName(" корректно сохранять пользователя")
     void shouldCorrectSaveUser() {
         entityDao.createOrUpdate(user);
@@ -66,7 +64,6 @@ class DBServiceEntityImplTest {
 
     @Test
     @DisplayName(" корректно загружать пользователя по заданному id")
-    @Order(2)
     void shouldLoadCorrectUserById() {
         AddressDataSet addressDataSet = new AddressDataSet("Lenina");
         List<PhoneDataSet> phoneDataSet = new ArrayList<>();
