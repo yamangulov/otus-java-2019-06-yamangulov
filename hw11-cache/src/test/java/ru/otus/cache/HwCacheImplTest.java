@@ -9,7 +9,6 @@ import ru.otus.api.model.PhoneDataSet;
 import ru.otus.api.model.User;
 import ru.otus.api.service.DBServiceEntity;
 import ru.otus.api.service.DBServiceEntityImpl;
-import ru.otus.api.service.DBServiceEntityImplCached;
 import ru.otus.hibernate.HibernateUtils;
 import ru.otus.hibernate.dao.EntityDaoHibernate;
 import ru.otus.hibernate.sessionmanager.SessionManagerHibernate;
@@ -18,7 +17,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Кэш должен уметь: ")
 class HwCacheImplTest {
