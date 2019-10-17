@@ -21,6 +21,7 @@
         <module>hw08-json</module>
         <module>hw09-jdbc</module>
         <module>hw10-hibernate</module>
+        <module>hw11-cache</module>
     </modules>
 
     <description>Homeworks of Java developer course</description>
