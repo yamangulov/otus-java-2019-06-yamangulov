@@ -22,6 +22,7 @@
         <module>hw09-jdbc</module>
         <module>hw10-hibernate</module>
         <module>hw11-cache</module>
+        <module>hw12-jetty</module>
     </modules>
 
     <description>Homeworks of Java developer course</description>
