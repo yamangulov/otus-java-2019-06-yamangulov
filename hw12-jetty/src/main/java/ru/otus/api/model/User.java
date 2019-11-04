@@ -18,6 +18,9 @@ public class User {
     @Column(name = "age")
     private int age;
 
+    @Column(name = "password")
+    private String password;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private AddressDataSet address;
@@ -28,10 +31,11 @@ public class User {
 
     public User() {}
 
-    public User(String name, int age, AddressDataSet address, List<PhoneDataSet> phoneList) {
+    public User(String name, String password, int age, AddressDataSet address, List<PhoneDataSet> phoneList) {
         this.name = name;
         this.age = age;
         this.address = address;
+        this.password = password;
         this.phoneList = phoneList;
     }
 
@@ -75,4 +79,11 @@ public class User {
         this.phoneList = phoneList;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

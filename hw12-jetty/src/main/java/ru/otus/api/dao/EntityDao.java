@@ -1,9 +1,10 @@
 package ru.otus.api.dao;
 
+import ru.otus.api.model.User;
 import ru.otus.api.sessionmanager.SessionManager;
 
 import java.sql.SQLException;
-import java.util.Optional;
+import java.util.List;
 
 public interface EntityDao<T> {
 
@@ -18,4 +19,6 @@ public interface EntityDao<T> {
     SessionManager getSessionManager();
 
     long getResultId();
+
+    List<User> getUsersList();
 }

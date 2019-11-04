@@ -41,7 +41,7 @@ class DBServiceEntityImplCachedTest {
         for (int i = 0; i < 100; i++) {
             List<PhoneDataSet> phones = new ArrayList<>();
             phones.add(new PhoneDataSet("555-555"));
-            var user = new User("User#" + i, 20 + i, new AddressDataSet("Address"), phones);
+            var user = new User("User#" + i, "", 20 + i, new AddressDataSet("Address"), phones);
             dbServiceEntity.createOrUpdateEntity(user);
             users.add(user);
         }

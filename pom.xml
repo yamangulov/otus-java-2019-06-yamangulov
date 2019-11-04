@@ -43,6 +43,9 @@
         <!-- компилятор ругается на эту строку -->
         <com.google.guava.version>28.0-jre</com.google.guava.version>
         <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
+
+        <jetty.version>9.4.22.v20191022</jetty.version>
+        <freemarker.version>2.3.29</freemarker.version>
     </properties>
 
 
@@ -52,6 +55,21 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${com.google.guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-server</artifactId>
+                <version>${jetty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-webapp</artifactId>
+                <version>${jetty.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

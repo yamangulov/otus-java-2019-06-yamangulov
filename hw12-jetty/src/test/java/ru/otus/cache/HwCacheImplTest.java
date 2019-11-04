@@ -54,7 +54,7 @@ class HwCacheImplTest {
     void get() {
         List<PhoneDataSet> phones = new ArrayList<>();
         phones.add(new PhoneDataSet("555-555"));
-        var user = new User("User", 20, new AddressDataSet("Address"), phones);
+        var user = new User("User", "", 20, new AddressDataSet("Address"), phones);
         cache.put(1000, new WeakReference<>(user));
 
         assertEquals(user, cache.get(1000).get());
@@ -91,7 +91,7 @@ class HwCacheImplTest {
         for (int i = 0; i < TEST_ELEMENTS_COUNT; i++) {
             List<PhoneDataSet> phones = new ArrayList<>();
             phones.add(new PhoneDataSet("555-555"));
-            var user = new User("User#" + i, 20 + i, new AddressDataSet("Address"), phones);
+            var user = new User("User#" + i, "", 20 + i, new AddressDataSet("Address"), phones);
             cache.put(i, new WeakReference<>(user));
         }
     }

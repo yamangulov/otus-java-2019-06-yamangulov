@@ -6,12 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.api.dao.EntityDao;
 import ru.otus.api.dao.EntityDaoException;
+import ru.otus.api.model.User;
 import ru.otus.api.sessionmanager.SessionManager;
 import ru.otus.hibernate.sessionmanager.DatabaseSessionHibernate;
 import ru.otus.hibernate.sessionmanager.SessionManagerHibernate;
 
 import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
 
 public class EntityDaoHibernate<T> implements EntityDao<T> {
   private static Logger logger = LoggerFactory.getLogger(EntityDaoHibernate.class);
@@ -82,5 +85,17 @@ public class EntityDaoHibernate<T> implements EntityDao<T> {
   @Override
   public SessionManager getSessionManager() {
     return sessionManager;
+  }
+
+  @Override
+  public List<User> getUsersList() {
+    sessionManager.beginSession();
+    DatabaseSessionHibernate currentSession = sessionManager.getCurrentSession();
+    try {
+      return currentSession.getHibernateSession().createSQLQuery("SELECT * FROM users").addEntity(User.class).list();
+    } catch (Exception e) {
+      logger.error(e.getMessage(), e);
+    }
+    return Collections.emptyList();
   }
 }
