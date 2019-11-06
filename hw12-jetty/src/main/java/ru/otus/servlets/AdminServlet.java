@@ -22,10 +22,8 @@ public class AdminServlet extends HttpServlet {
     private DBServiceEntity<User> dbServiceEntity;
 
 
-    public AdminServlet(Map<Long, EntityDao<User>> startedMap) throws IOException {
+    public AdminServlet(EntityDao<User> entityDao) throws IOException {
         this.templateProcessor = new TemplateProcessor();
-        Long adminId = (Long) startedMap.keySet().toArray()[0];
-        EntityDao<User> entityDao = startedMap.get(adminId);
         this.dbServiceEntity = new DBServiceEntityImplCached<>(entityDao);
     }
 

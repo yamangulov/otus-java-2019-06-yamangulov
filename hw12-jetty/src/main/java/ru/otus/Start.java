@@ -45,7 +45,10 @@ public class Start {
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new LoginServlet(userLoginService(startedMap))), "/login");
-        context.addServlet(new ServletHolder(new AdminServlet(startedMap)), "/admin");
+
+        Long adminId = (Long) startedMap.keySet().toArray()[0];
+        EntityDao<User> entityDao = startedMap.get(adminId);
+        context.addServlet(new ServletHolder(new AdminServlet(entityDao)), "/admin");
         context.addFilter(new FilterHolder(new AuthorizationFilter()), "/admin", null);
 
         Server server = new Server(PORT);
@@ -64,7 +67,7 @@ public class Start {
     //так как везде у меня реализованы методы для получения сущности определенного класса по id, и нет реализованного
     //получения сущности из БД по имени (так было сделано в прошлых ДЗ), то я возвращаю созданного при инициализации
     //Hibernate первого пользователя в качестве админа, и передаю его далее в метод для инициализации Jetty, а Jetty уже
-    //проверяет совпадение логина и пароля с кэшем или БД, где данный юзер хранится после создания
+    //проверяет совпадение логина и пароля  в UserLoginService с кэшем или БД, где данный юзер хранится после создания
 
     //в ДЗ нет задачи авторизовываться под не-админами, но если бы была, то можно было бы реализовать метод для получения
     //сущности юзера из БД, проверки логина-пароля и авторизации под произвольным юзером. Но тогда потребовалась бы доп.
