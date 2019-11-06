@@ -26,7 +26,7 @@ public class AdminServlet extends HttpServlet {
         this.templateProcessor = new TemplateProcessor();
         Long adminId = (Long) startedMap.keySet().toArray()[0];
         EntityDao<User> entityDao = startedMap.get(adminId);
-        this.dbServiceEntity = new DBServiceEntityImplCached<>(adminEntityDao);
+        this.dbServiceEntity = new DBServiceEntityImplCached<>(entityDao);
     }
 
     @Override
