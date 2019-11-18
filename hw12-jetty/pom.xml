@@ -86,6 +86,11 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-util</artifactId>
+            <version>9.4.20.v20190813</version>
+        </dependency>
     </dependencies>
 
     <packaging>jar</packaging>
