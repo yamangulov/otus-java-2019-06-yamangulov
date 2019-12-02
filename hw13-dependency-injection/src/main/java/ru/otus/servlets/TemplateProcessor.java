@@ -10,7 +10,7 @@ import java.io.Writer;
 import java.util.Map;
 
 class TemplateProcessor {
-    private static final String HTML_DIR = "/tml/";
+    private static final String HTML_DIR = "/";
 
     private final Configuration configuration;
 
