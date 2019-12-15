@@ -1,67 +1,47 @@
-<html xmlns="http://www.w3.org/1999/xhtml" content="text/html;">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Admin page</title>
 </head>
-
 <body>
-<p>
-    <img src="static/logo.png">
-</p>
+<img th:src="@{/logo.png}" width="200" height="100" alt="tomcat_logo"/> <br> <br>
 <h3>
     Admin panel
 </h3>
+<hr>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Возраст</th>
+    </tr>
+    </thead>
 
-
-<form action="/admin" method="post">
-    <p>
-        <input type="submit" name="getUsersList" value="Показать список пользователей">
-    </p>
-
-</form>
-
-<#list usersList as user>
- name:${user.name}  age:${user.age} <br>
-</#list>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.age}"></td>
+    </tr>
+    </tbody>
+</table>
 
 <hr>
-<br>
-<form action="/admin" method="post">
 
-    <input type="submit" name="createUser" value="Создать нового пользователя">
-  
-    <p>
-        <input type="text" name="userName" placeholder="Введите имя" required/>
-    </p>
+<a th:href="@{/registration}">
+    Добавить пользователя
+</a>
 
-    <p>
-        <input type="number" name="userAge" placeholder="Введите возраст" required/>
-    </p>
+<hr>
 
-    <input type="reset" value="Очистить">
+<form th:action="@{/logout}"
+      method="POST">
+
+    <input type="submit" value="Выход">
 
 </form>
-<p>
-        <#list createdUser as createdUser>
-        Created User: name '${createdUser.name}' -  age '${createdUser.age}' <br>
-       </#list>
-       
-</p>
-
-<br>
-<br>
-
-<form action="/admin" method="post">
-  
-    <input type="submit" name="exitAdminPanel" value="Выход">
-    
-
-</form>
-
-
-
-
 
 </body>
-
 </html>

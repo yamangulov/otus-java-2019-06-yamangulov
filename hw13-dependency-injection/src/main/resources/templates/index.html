@@ -1,11 +1,12 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml" content="text/html;">
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Login to the web server Jetty</title>
+    <meta charset="UTF-8">
+    <title>Tomcat WebServer</title>
 </head>
 <body>
-<div class="top">
-    <p><img src="../static/logo.png"/></p>
-    <p><a href="login">Login for admin</a></p>
-</div>
+<img th:src="@{/logo.png}" width="200" height="100" alt="tomcat_logo"/> <br> <br>
+
+<a th:href="@{login}">Login to server</a>
 </body>
 </html>

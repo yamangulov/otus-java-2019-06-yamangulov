@@ -2,12 +2,14 @@ package ru.otus.cache;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.lang.ref.WeakReference;
 import java.util.Objects;
 import java.util.WeakHashMap;
 
-
+@Component
 public class HwCacheImpl<K, V> implements HwCache<K, V> {
     private static Logger logger = LoggerFactory.getLogger(HwCacheImpl.class);
     private static final String PUT_ACTION = "Entity put to cache";
@@ -16,6 +18,7 @@ public class HwCacheImpl<K, V> implements HwCache<K, V> {
     private final WeakHashMap<K, V> cache;
     private WeakHashMap<K, WeakReference<HwCacheListener<K, V>>> listenersMap;
 
+    @Autowired
     public HwCacheImpl() {
         this.cache = new WeakHashMap<>();
         this.listenersMap = new WeakHashMap<>();

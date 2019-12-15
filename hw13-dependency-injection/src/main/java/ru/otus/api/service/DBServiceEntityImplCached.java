@@ -1,5 +1,7 @@
 package ru.otus.api.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.otus.api.dao.EntityDao;
 import ru.otus.api.model.User;
 import ru.otus.cache.HwCache;
@@ -8,9 +10,11 @@ import ru.otus.cache.HwCacheImpl;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+@Component
 public class DBServiceEntityImplCached<T> extends DBServiceEntityImpl<T> {
     private final HwCache<Long, Object> cache;
 
+    @Autowired
     public DBServiceEntityImplCached(EntityDao<T> entityDao) {
         super(entityDao);
         cache = new HwCacheImpl<>();

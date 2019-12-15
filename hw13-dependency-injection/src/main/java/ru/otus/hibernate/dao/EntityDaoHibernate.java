@@ -4,6 +4,8 @@ package ru.otus.hibernate.dao;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import ru.otus.api.dao.EntityDao;
 import ru.otus.api.dao.EntityDaoException;
 import ru.otus.api.model.User;
@@ -16,6 +18,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
+@Repository
 public class EntityDaoHibernate<T> implements EntityDao<T> {
   private static Logger logger = LoggerFactory.getLogger(EntityDaoHibernate.class);
 
@@ -28,6 +31,7 @@ public class EntityDaoHibernate<T> implements EntityDao<T> {
     return resultId;
   }
 
+  @Autowired
   public EntityDaoHibernate(SessionManagerHibernate sessionManager) {
     this.sessionManager = sessionManager;
   }
