@@ -28,7 +28,7 @@ public class Sequence {
             if (flag.get() == 0) {
                 System.out.println(Thread.currentThread().getName() + (counter.incrementAndGet() - 1));
                 sleep(1000);
-                notifyWaitingThreads();
+                notifyAll();
                 toWait();
                 if (counter.get() == 11) {
                     flag = new AtomicInteger(1);
@@ -36,18 +36,12 @@ public class Sequence {
             } else {
                 System.out.println(Thread.currentThread().getName() + (counter.decrementAndGet() - 1));
                 sleep(1000);
-                notifyWaitingThreads();
+                notifyAll();
                 toWait();
                 if (counter.get() == 2) {
                     flag = new AtomicInteger(0);
                 }
             }
-        }
-    }
-
-    private void notifyWaitingThreads() {
-        if (thread1.getState().equals(Thread.State.WAITING) || thread2.getState().equals(Thread.State.WAITING)) {
-            notifyAll();
         }
     }
 
