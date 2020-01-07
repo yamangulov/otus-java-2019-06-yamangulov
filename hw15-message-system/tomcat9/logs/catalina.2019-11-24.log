@@ -1,0 +1,43 @@
+24-Nov-2019 09:18:11.858 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.16 (Ubuntu)
+24-Nov-2019 09:18:11.860 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Sep 11 2019 19:47:51 UTC
+24-Nov-2019 09:18:11.860 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.16.0
+24-Nov-2019 09:18:11.862 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Linux
+24-Nov-2019 09:18:11.865 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            4.15.0-70-generic
+24-Nov-2019 09:18:11.865 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+24-Nov-2019 09:18:11.866 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /usr/lib/jvm/java-11-openjdk-amd64
+24-Nov-2019 09:18:11.866 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           11.0.4+11-post-Ubuntu-1ubuntu218.04.3
+24-Nov-2019 09:18:11.867 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Ubuntu
+24-Nov-2019 09:18:11.867 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /home/stranger/IdeaProjects/otus-java-2019-06-yamangulov/hw13-dependency-injection/tomcat9
+24-Nov-2019 09:18:11.867 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /usr/share/tomcat9
+24-Nov-2019 09:18:11.880 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+24-Nov-2019 09:18:11.881 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+24-Nov-2019 09:18:11.881 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+24-Nov-2019 09:18:11.881 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/home/stranger/IdeaProjects/otus-java-2019-06-yamangulov/hw13-dependency-injection/tomcat9/conf/logging.properties
+24-Nov-2019 09:18:11.882 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+24-Nov-2019 09:18:11.882 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.awt.headless=true
+24-Nov-2019 09:18:11.882 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -XX:+UseG1GC
+24-Nov-2019 09:18:11.883 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+24-Nov-2019 09:18:11.883 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+24-Nov-2019 09:18:11.883 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+24-Nov-2019 09:18:11.884 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+24-Nov-2019 09:18:11.884 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/home/stranger/IdeaProjects/otus-java-2019-06-yamangulov/hw13-dependency-injection/tomcat9
+24-Nov-2019 09:18:11.884 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/usr/share/tomcat9
+24-Nov-2019 09:18:11.885 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/home/stranger/IdeaProjects/otus-java-2019-06-yamangulov/hw13-dependency-injection/tomcat9/temp
+24-Nov-2019 09:18:11.886 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded APR based Apache Tomcat Native library [1.2.21] using APR version [1.6.3].
+24-Nov-2019 09:18:11.887 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+24-Nov-2019 09:18:11.888 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+24-Nov-2019 09:18:11.899 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+24-Nov-2019 09:18:11.991 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8008"]
+24-Nov-2019 09:18:12.057 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [1 405] milliseconds
+24-Nov-2019 09:18:12.209 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+24-Nov-2019 09:18:12.209 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.16 (Ubuntu)]
+24-Nov-2019 09:18:12.227 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/home/stranger/IdeaProjects/otus-java-2019-06-yamangulov/hw13-dependency-injection/tomcat9/webapps/hw13_dependency_injection_war]
+24-Nov-2019 09:18:16.826 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+24-Nov-2019 09:18:16.941 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/stranger/IdeaProjects/otus-java-2019-06-yamangulov/hw13-dependency-injection/tomcat9/webapps/hw13_dependency_injection_war] has finished in [4 714] ms
+24-Nov-2019 09:18:16.951 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8008"]
+24-Nov-2019 09:18:16.984 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [4 925] milliseconds
+24-Nov-2019 09:19:30.021 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+24-Nov-2019 09:19:30.023 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8008"]
+24-Nov-2019 09:19:30.033 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+24-Nov-2019 09:19:30.092 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8008"]
+24-Nov-2019 09:19:30.097 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8008"]

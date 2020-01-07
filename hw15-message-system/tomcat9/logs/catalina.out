@@ -1,0 +1,44 @@
+NOTE: Picked up JDK_JAVA_OPTIONS:  --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+<6>Server version name:   Apache Tomcat/9.0.16 (Ubuntu)
+<6>Server built:          Sep 11 2019 19:47:51 UTC
+<6>Server version number: 9.0.16.0
+<6>OS Name:               Linux
+<6>OS Version:            4.15.0-70-generic
+<6>Architecture:          amd64
+<6>Java Home:             /usr/lib/jvm/java-11-openjdk-amd64
+<6>JVM Version:           11.0.4+11-post-Ubuntu-1ubuntu218.04.3
+<6>JVM Vendor:            Ubuntu
+<6>CATALINA_BASE:         /home/stranger/IdeaProjects/otus-java-2019-06-yamangulov/hw13-dependency-injection/tomcat9
+<6>CATALINA_HOME:         /usr/share/tomcat9
+<6>Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+<6>Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+<6>Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+<6>Command line argument: -Djava.util.logging.config.file=/home/stranger/IdeaProjects/otus-java-2019-06-yamangulov/hw13-dependency-injection/tomcat9/conf/logging.properties
+<6>Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+<6>Command line argument: -Djava.awt.headless=true
+<6>Command line argument: -XX:+UseG1GC
+<6>Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+<6>Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+<6>Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+<6>Command line argument: -Dignore.endorsed.dirs=
+<6>Command line argument: -Dcatalina.base=/home/stranger/IdeaProjects/otus-java-2019-06-yamangulov/hw13-dependency-injection/tomcat9
+<6>Command line argument: -Dcatalina.home=/usr/share/tomcat9
+<6>Command line argument: -Djava.io.tmpdir=/home/stranger/IdeaProjects/otus-java-2019-06-yamangulov/hw13-dependency-injection/tomcat9/temp
+<6>Loaded APR based Apache Tomcat Native library [1.2.21] using APR version [1.6.3].
+<6>APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+<6>APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+<6>OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+<6>Initializing ProtocolHandler ["http-nio-8008"]
+<6>Server initialization in [1 405] milliseconds
+<6>Starting service [Catalina]
+<6>Starting Servlet engine: [Apache Tomcat/9.0.16 (Ubuntu)]
+<6>Установка веб приложения в папку [/home/stranger/IdeaProjects/otus-java-2019-06-yamangulov/hw13-dependency-injection/tomcat9/webapps/hw13_dependency_injection_war]
+<6>At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+<6>Deployment of web application directory [/home/stranger/IdeaProjects/otus-java-2019-06-yamangulov/hw13-dependency-injection/tomcat9/webapps/hw13_dependency_injection_war] has finished in [4 714] ms
+<6>Starting ProtocolHandler ["http-nio-8008"]
+<6>Server startup in [4 925] milliseconds
+<6>A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+<6>Pausing ProtocolHandler ["http-nio-8008"]
+<6>Stopping service [Catalina]
+<6>Stopping ProtocolHandler ["http-nio-8008"]
+<6>Destroying ProtocolHandler ["http-nio-8008"]

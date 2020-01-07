@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login page</title>
+    <style>
+        .failed {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>Login page</h1>
+<img th:src="@{/logo.png}" width="200" height="100" alt="tomcat_logo"/> <br> <br>
+
+<div th:if="${param.error}">
+
+    <i class="failed"> Invalid username or password. </i>
+
+</div>
+
+<form th:action="@{/loginPage}" method="post">
+
+    <p>
+        <input type="text" id="username" name="username" autofocus="autofocus" placeholder="Введите логин" required/> <br/>
+    </p>
+
+    <p>
+        <input type="password" id="password" name="password"  placeholder="Введите пароль" required/> <br/>
+    </p>
+
+    <input type="submit" value="Отправить"/>
+</form>
+</body>
+</html>
