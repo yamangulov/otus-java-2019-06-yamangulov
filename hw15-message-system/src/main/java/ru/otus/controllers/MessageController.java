@@ -18,13 +18,13 @@ public class MessageController {
         this.messageSender = messageSender;
     }
 
-    @MessageMapping("/app/addUser")
+    @MessageMapping("/addUser")
     public void saveUser(String frontMessage) {
         log.info("Получено сообщение от фронта: {}", frontMessage);
 
         frontendService.saveUser(frontMessage, userData -> {
             log.info("DBService ответил сообщением: {}", userData);
-            messageSender.convertAndSend("/topic/response/addUser", frontMessage);
+            messageSender.convertAndSend("/topic/response/addUser", userData);
         });
     }
 }
