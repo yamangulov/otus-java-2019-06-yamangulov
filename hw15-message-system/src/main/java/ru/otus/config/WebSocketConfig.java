@@ -20,6 +20,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/registration/websocket")
                 .setAllowedOrigins("*")
                 .withSockJS()
-                .setClientLibraryUrl("http://localhost:8008/hw15_message_system_war/webjars/sockjs-client/1.0.2/sockjs.min.js");
+                .setClientLibraryUrl("/webjars/sockjs-client/1.0.2/sockjs.min.js");
     }
 }
