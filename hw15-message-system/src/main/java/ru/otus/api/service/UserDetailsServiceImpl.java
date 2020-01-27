@@ -23,8 +23,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(userName);
         }
-        System.out.println("User password from instance of UserDetailsServiceImpl:");
-        System.out.println(user.getPassword());
         return new UserDetailsImpl(user);
     }
 }

@@ -41,11 +41,4 @@ public class AdminInitConfig {
 
         serviceUser.createOrUpdateEntity(user);
     }
-
-    @Bean
-    public void checkInitialUsers() {
-        System.out.println("List of initial users:");
-        System.out.println(serviceUser.getUsersList().get(0).getPassword());
-        System.out.println(serviceUser.getUsersList().get(1).getPassword());
-    }
 }
