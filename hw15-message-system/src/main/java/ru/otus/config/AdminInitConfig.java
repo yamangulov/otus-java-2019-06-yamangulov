@@ -25,7 +25,7 @@ public class AdminInitConfig {
         phoneDataSet.add(new PhoneDataSet("555-555"));
         phoneDataSet.add(new PhoneDataSet("666-666"));
 
-        User admin = new User( "admin", "111111", 50, addressDataSet, phoneDataSet);
+        User admin = new User( "admin", "{noop}111111", 50, addressDataSet, phoneDataSet); //{noop} совершенно необходим при создании пароля, так как с 5 Spring Boot и выше используется уже Password Storage Format даже для plain text
 
         serviceUser.createOrUpdateEntity(admin);
     }
@@ -37,8 +37,15 @@ public class AdminInitConfig {
         phoneDataSet.add(new PhoneDataSet("777-777"));
         phoneDataSet.add(new PhoneDataSet("888-888"));
 
-        User user = new User( "simple", "222222", 45, addressDataSet, phoneDataSet);
+        User user = new User( "simple", "{noop}222222", 45, addressDataSet, phoneDataSet);
 
         serviceUser.createOrUpdateEntity(user);
+    }
+
+    @Bean
+    public void checkInitialUsers() {
+        System.out.println("List of initial users:");
+        System.out.println(serviceUser.getUsersList().get(0).getPassword());
+        System.out.println(serviceUser.getUsersList().get(1).getPassword());
     }
 }

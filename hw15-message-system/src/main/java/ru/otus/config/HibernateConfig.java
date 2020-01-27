@@ -14,8 +14,10 @@ import ru.otus.hibernate.HibernateUtils;
 @EnableTransactionManagement
 @ImportResource({"classpath:hibernate.cfg.xml"})
 public class HibernateConfig {
-    @Bean
+
+    @Bean(name="entityManagerFactory") //имя необходимо, без него выкидывается ошибка с подсказкой, что именно такое имя требуется для корректной работы sessionFactory в дальнейшем
     public SessionFactory sessionFactory() {
         return HibernateUtils.buildSessionFactory("hibernate.cfg.xml", User.class, AddressDataSet.class, PhoneDataSet.class);
     }
+
 }
