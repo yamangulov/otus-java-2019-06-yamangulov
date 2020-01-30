@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+</head>
+<body>
+<img th:src="@{/logo.png}" width="200" height="100" alt="tomcat_logo"/> <br> <br>
+<h3>
+    Admin panel
+</h3>
+<hr>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Возраст</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.age}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<hr>
+
+<a th:href="@{/registration}">
+    Добавить пользователя
+</a>
+
+<hr>
+
+<form th:action="@{/logout}"
+      method="POST">
+
+    <input type="submit" value="Выход">
+
+</form>
+
+</body>
+</html>

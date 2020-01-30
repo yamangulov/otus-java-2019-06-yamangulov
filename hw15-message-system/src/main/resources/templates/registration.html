@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>User Registration</title>
+
+<!--	версионно независимый вариант с @{/webjars/jquery/jquery.min.js} у меня почему-то не сработал вообще, локатор его не видит-->
+	<script th:src="@{/webjars/jquery/3.1.0/jquery.min.js}"></script>
+	<script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+	<script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
+	<script th:src="@{/app.js}"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+	<h3>Регистрация нового пользователя</h3>
+
+	<hr>
+
+<!--форму отправки в контроллер post запроса на регистрацию заменяем формой, работающей через фронтенд -->
+
+<!--	<form action="#" th:action="@{/registration}"-->
+<!--		  th:object="${user}" method="POST" accept-charset="UTF-8">-->
+
+<!--		<input id="holder-input" type="text" th:field="*{name}" placeholder="Имя">-->
+
+<!--		<input type="text" th:field="*{age}" placeholder="Возраст">-->
+
+<!--		<button type="submit">Создать</button>-->
+
+<!--	</form>-->
+
+	<form action="#" accept-charset="UTF-8">
+
+		<input id="name" type="text" placeholder="Имя">
+
+		<input id="age" type="text" placeholder="Возраст">
+
+		<button id="submitButton" type="text" onclick="sendUser()">Создать</button>
+
+	</form>
+
+	<hr>
+
+	<a th:href="@{/admin}">Вернуться к списку пользователей</a>
+
+</div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
