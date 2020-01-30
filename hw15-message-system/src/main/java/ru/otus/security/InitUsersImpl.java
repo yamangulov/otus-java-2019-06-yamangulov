@@ -1,7 +1,7 @@
-package ru.otus.config;
+package ru.otus.security;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.otus.api.model.AddressDataSet;
 import ru.otus.api.model.PhoneDataSet;
 import ru.otus.api.model.User;
@@ -10,16 +10,16 @@ import ru.otus.api.service.DBServiceEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
-public class AdminInitConfig {
+@Service
+public class InitUsersImpl implements InitUsers {
     private DBServiceEntity<User> serviceUser;
 
-    public AdminInitConfig(DBServiceEntity<User> serviceUser) {
+    @Autowired
+    public InitUsersImpl(DBServiceEntity<User> serviceUser) {
         this.serviceUser = serviceUser;
     }
 
-    @Bean
-    public void createOneUser() {
+    public void initUsers() {
         AddressDataSet addressDataSet = new AddressDataSet("Lenina");
         List<PhoneDataSet> phoneDataSet = new ArrayList<>();
         phoneDataSet.add(new PhoneDataSet("555-555"));
@@ -28,17 +28,17 @@ public class AdminInitConfig {
         User admin = new User( "admin", "{noop}111111", 50, addressDataSet, phoneDataSet); //{noop} совершенно необходим при создании пароля, так как с 5 Spring Boot и выше используется уже Password Storage Format даже для plain text
 
         serviceUser.createOrUpdateEntity(admin);
-    }
 
-    @Bean
-    public void createTwoUser() {
-        AddressDataSet addressDataSet = new AddressDataSet("Tolbukhina");
-        List<PhoneDataSet> phoneDataSet = new ArrayList<>();
-        phoneDataSet.add(new PhoneDataSet("777-777"));
-        phoneDataSet.add(new PhoneDataSet("888-888"));
+        AddressDataSet addressDataSet2 = new AddressDataSet("Tolbukhina");
+        List<PhoneDataSet> phoneDataSet2 = new ArrayList<>();
+        phoneDataSet2.add(new PhoneDataSet("777-777"));
+        phoneDataSet2.add(new PhoneDataSet("888-888"));
 
-        User user = new User( "simple", "{noop}222222", 45, addressDataSet, phoneDataSet);
+        User user = new User( "simple", "{noop}222222", 45, addressDataSet2, phoneDataSet2);
 
         serviceUser.createOrUpdateEntity(user);
     }
+
+
+
 }

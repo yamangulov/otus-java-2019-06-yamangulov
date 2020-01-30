@@ -7,6 +7,6 @@ public class WebAppInitializer extends SpringBootServletInitializer {
 
   @Override
   protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-    return application.sources(Start.class);
+    return application.sources(App.class);
   }
 }
