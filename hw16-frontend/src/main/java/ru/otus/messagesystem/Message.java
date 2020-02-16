@@ -1,9 +1,10 @@
 package ru.otus.messagesystem;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Message {
+public class Message implements Serializable {
   static final Message VOID_MESSAGE = new Message();
 
   private final UUID id = UUID.randomUUID();
@@ -26,7 +27,7 @@ public class Message {
   public Message(String from, String to, UUID sourceMessageId, String type, byte[] payload) {
     this.from = from;
     this.to = to;
-    this.sourceMessageId = null;
+    this.sourceMessageId = sourceMessageId;
     this.type = type;
     this.payloadLength = payload.length;
     this.payload = payload;

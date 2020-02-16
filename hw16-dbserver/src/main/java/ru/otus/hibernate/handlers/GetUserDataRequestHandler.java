@@ -53,7 +53,7 @@ public class GetUserDataRequestHandler implements RequestHandler {
             logger.error("Error by creating new json from cachedUser: ", e.getMessage());
         }
 
-        return Optional.of(new Message(msg.getTo(), msg.getFrom(), Optional.of(msg.getId()),
+        return Optional.of(new Message(msg.getTo(), msg.getFrom(), msg.getId(),
                 MessageType.USER_DATA.getValue(), Serializers.serialize(savedUserData)));
     }
 }

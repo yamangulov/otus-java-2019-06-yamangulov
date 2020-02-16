@@ -33,24 +33,16 @@ public class FrontendServiceImpl implements FrontendService {
         this.databaseServiceClientName = databaseServiceClientName;
     }
 
+    public Map<UUID, Consumer<?>> getConsumerMap() {
+        return consumerMap;
+    }
+
     @Override
     public void saveUser(String frontMessage, Consumer<String> dataConsumer) {
 
         //Извлекаем JSON объект с данными пользователя из сообщения. Недостаток моей реализации через ObjectMapper в том, то Frontend Server должен знать детали POJO объектов, но я думаю, что это некритично
-        MessageStr messageStr = null;
-        try {
-            messageStr = objectMapper.readValue(frontMessage, MessageStr.class);
-        } catch (JsonProcessingException e) {
-            log.error("Error by reading message from frontendMessage: ", e.getMessage());
-        }
-        User userFromMessage = messageStr.getUserFromMessage();
-        String jsonUserData = null;
-        try {
-            jsonUserData = objectMapper.writeValueAsString(userFromMessage);
-        } catch (JsonProcessingException e) {
-            log.error("Error by creating jsonUserDate from userFromMessage: ", e.getMessage());
-        }
-        log.info("jsonUserData: {}", jsonUserData);
+        User userFromMessage = getUserFromMessage(frontMessage);
+        String jsonUserData = getJsonUserDataFromMessage(userFromMessage);
 
         Message outMsg = msClient.produceMessage(databaseServiceClientName, jsonUserData, MessageType.USER_DATA);
         consumerMap.put(outMsg.getId(), dataConsumer);
@@ -97,5 +89,28 @@ public class FrontendServiceImpl implements FrontendService {
             log.error("msg:" + message, ex);
         }
 
+    }
+
+    @Override
+    public User getUserFromMessage(String frontMessage) {
+        MessageStr messageStr = null;
+        try {
+            messageStr = objectMapper.readValue(frontMessage, MessageStr.class);
+        } catch (JsonProcessingException e) {
+            log.error("Error by reading message from frontendMessage: ", e.getMessage());
+        }
+        return messageStr.getUserFromMessage();
+    }
+
+    @Override
+    public String getJsonUserDataFromMessage(User userFromMessage) {
+        String jsonUserData = null;
+        try {
+            jsonUserData = objectMapper.writeValueAsString(userFromMessage);
+        } catch (JsonProcessingException e) {
+            log.error("Error by creating jsonUserDate from userFromMessage: ", e.getMessage());
+        }
+        log.info("jsonUserData: {}", jsonUserData);
+        return jsonUserData;
     }
 }

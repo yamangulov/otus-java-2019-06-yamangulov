@@ -21,7 +21,6 @@ public class DBClient {
         try (Socket clientSocket = new Socket(messageServerHost, messageServerPort);
              ObjectOutputStream outputStream = new ObjectOutputStream(clientSocket.getOutputStream())) {
 
-            outputStream.flush();
             outputStream.writeObject(message);
             log.info("Message with ID [{}] is send to {} via MessageServer", message.getId(), message.getTo());
 

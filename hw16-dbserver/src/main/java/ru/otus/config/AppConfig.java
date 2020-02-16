@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import ru.otus.api.model.User;
 import ru.otus.api.service.DBServiceEntity;
 import ru.otus.hibernate.handlers.GetUserDataRequestHandler;
+import ru.otus.hibernate.handlers.GetUsersListRequestHandler;
 import ru.otus.messagesystem.MessageType;
 import ru.otus.messagesystem.MsClient;
 import ru.otus.messagesystem.MsClientImpl;
@@ -35,6 +36,7 @@ public class AppConfig {
     public MsClient msClientImpl() {
         var dbServerMsClient = new MsClientImpl(dbServerMsClientName, dbClient());
         dbServerMsClient.addHandler(MessageType.USER_DATA, new GetUserDataRequestHandler(dbServiceEntity));
+        dbServerMsClient.addHandler(MessageType.USERS_LIST, new GetUsersListRequestHandler(dbServiceEntity));
         return dbServerMsClient;
     }
 

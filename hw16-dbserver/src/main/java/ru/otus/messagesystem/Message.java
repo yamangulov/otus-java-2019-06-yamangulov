@@ -1,16 +1,16 @@
 package ru.otus.messagesystem;
 
+import java.io.Serializable;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
-public class Message {
+public class Message implements Serializable {
   static final Message VOID_MESSAGE = new Message();
 
   private final UUID id = UUID.randomUUID();
   private final String from;
   private final String to;
-  private final Optional<UUID> sourceMessageId;
+  private final UUID sourceMessageId;
   private final String type;
   private final int payloadLength;
   private final byte[] payload;
@@ -18,13 +18,13 @@ public class Message {
   private Message() {
     this.from = null;
     this.to = null;
-    this.sourceMessageId = Optional.empty();
+    this.sourceMessageId = null;
     this.type = "voidTechnicalMessage";
     this.payload = new byte[1];
     this.payloadLength = payload.length;
   }
 
-  public Message(String from, String to, Optional<UUID> sourceMessageId, String type, byte[] payload) {
+  public Message(String from, String to, UUID sourceMessageId, String type, byte[] payload) {
     this.from = from;
     this.to = to;
     this.sourceMessageId = sourceMessageId;
@@ -83,7 +83,7 @@ public class Message {
   }
 
 
-  public Optional<UUID> getSourceMessageId() {
+  public UUID getSourceMessageId() {
     return sourceMessageId;
   }
 }

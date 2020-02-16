@@ -39,9 +39,10 @@ public class MessageServer {
 
     //так как здесь считывается объект из потока, то тестирование при помощи отправки строки через телнет в терминале не пройдет, отправляемые данные должны соответствовать принимаемым, то есть писать в сокет мы тоже должны, например, методом writeObject там, где идет отправка (и в тестах тоже)
     private void clientHandler(Socket clientSocket) {
+        Message receivedMessage;
         try (ObjectInputStream inputStream = new ObjectInputStream(clientSocket.getInputStream())) {
 
-            Message receivedMessage = (Message) inputStream.readObject();
+            receivedMessage = (Message) inputStream.readObject();
 
             log.info("Received from {}: message ID[{}] ", receivedMessage.getFrom(), receivedMessage.getId());
 

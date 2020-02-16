@@ -15,7 +15,7 @@ public class MessageClient {
 
         try (Socket clientSocket = new Socket(clientHost, clientPort);
              ObjectOutputStream outputStream = new ObjectOutputStream(clientSocket.getOutputStream())) {
-            outputStream.flush();
+
             outputStream.writeObject(message);
             log.info("Message with ID [{}] is send to {}", message.getId(), message.getTo());
 

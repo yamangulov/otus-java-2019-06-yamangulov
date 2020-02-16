@@ -1,6 +1,7 @@
 package ru.otus.front;
 
 
+import ru.otus.api.model.User;
 import ru.otus.messagesystem.Message;
 
 import java.util.Optional;
@@ -17,5 +18,9 @@ public interface FrontendService {
     void sendFrontMessage(Message message);
 
     void getUsersList(String frontMessage, Consumer<String> dataConsumer);
+
+    User getUserFromMessage(String frontMessage);
+
+    String getJsonUserDataFromMessage(User userFromMessage);
 }
 

@@ -41,7 +41,8 @@ public class DBServiceEntityImplCached<T> extends DBServiceEntityImpl<T> {
 
     @Override
     public T getEntity(long id, Class<T> clazz) {
-        T cachedEntity = (T)cache.get(id);
+        WeakReference<User> ref = (WeakReference<User>) cache.get(id);
+        T cachedEntity = (T)ref.get();
         if (cachedEntity != null) {
             return cachedEntity;
         }

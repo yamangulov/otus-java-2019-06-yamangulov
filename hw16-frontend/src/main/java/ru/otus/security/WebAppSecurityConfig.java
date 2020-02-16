@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,20 +66,20 @@ public class WebAppSecurityConfig extends WebSecurityConfigurerAdapter {
     public static NoOpPasswordEncoder noOpPasswordEncoder() {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        // базовая авторизация для тестирования, так как без нее пришлось бы делать авторизацию для юзера 1 из БД, а это уже выходит за рамки ДЗ. Я пробовал разобраться, как сделать авторизацию через БД в Spring Boot, но пока не очень понял, как можно совместить ее с моим классом UserLoginService
-//        UserBuilder users = User.withDefaultPasswordEncoder();
-//
-//        auth.inMemoryAuthentication()
-//                .withUser(users.username("admin").password("111111").roles("ADMIN"));
-//    }
 
+    // поскольку реализовать UserDetailsService через сообщения не удалось, вернулся к базовой авторизации. В ДЗ-16, как я понимаю, главное, это разобраться с обменом соообщениями и запуском приложений, а эта задача сложнее и выходит за рамки ДЗ. Мой старый UserDetailsService я нарочно не удалил "про запас", возможно, вернусь к этой теме в проекте
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
+        User.UserBuilder users = User.withDefaultPasswordEncoder();
+
+        auth.inMemoryAuthentication()
+                .withUser(users.username("admin").password("111111").roles("ADMIN"));
     }
+
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.authenticationProvider(authenticationProvider());
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

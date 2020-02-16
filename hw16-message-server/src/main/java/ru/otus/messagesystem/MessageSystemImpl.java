@@ -57,6 +57,7 @@ public final class MessageSystemImpl implements MessageSystem {
         while (runFlag.get()) {
             try {
                 Message msg = messageQueue.take();
+                log.info("Message received from msgProcessor {}", msg);
                 if (msg == Message.VOID_MESSAGE) {
                     log.info("received the stop message");
                 } else {
@@ -124,6 +125,7 @@ public final class MessageSystemImpl implements MessageSystem {
     @Override
     public boolean newMessage(Message msg) {
         if (runFlag.get()) {
+            log.info("New message {} passed to newMessage() in MessageSystemImpl and runFlag.get() is true", msg);
             return messageQueue.offer(msg);
         } else {
             log.warn("MS is being shutting down... rejected:{}", msg);

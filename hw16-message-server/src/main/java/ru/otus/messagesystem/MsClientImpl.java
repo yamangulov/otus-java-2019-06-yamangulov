@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import ru.otus.messagesystem.common.Serializers;
 import ru.otus.sockets.MessageClient;
 
+import javax.annotation.PostConstruct;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,6 +27,11 @@ public class MsClientImpl implements MsClient {
   public MsClientImpl(MessageSystem messageSystem) {
     this.messageSystem = messageSystem;
     this.socketClient = new MessageClient();
+  }
+
+  @PostConstruct
+  private void postConstruct() {
+    messageSystem.addClient(this);
   }
 
   @Override
