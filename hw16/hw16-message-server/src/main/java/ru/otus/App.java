@@ -1,19 +1,20 @@
 package ru.otus;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.otus.sockets.MessageServer;
 
-import java.util.Collections;
-
 @SpringBootApplication
 @AllArgsConstructor
+@Slf4j
 public class App implements CommandLineRunner {
     private MessageServer messageServer;
 
     public static void main(String[] args) {
+        log.info("args from ms main method {}", args);
         SpringApplication.run(App.class, args);
     }
 

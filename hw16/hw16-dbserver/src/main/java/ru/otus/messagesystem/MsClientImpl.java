@@ -13,7 +13,7 @@ public class MsClientImpl implements MsClient {
 
   private final String name;
 
-  private final Map<String, RequestHandler> handlers = new ConcurrentHashMap<>();
+  private final Map<String, UniversalMessageHandler> handlers = new ConcurrentHashMap<>();
 
   private DBClient dBClient;
 
@@ -24,7 +24,7 @@ public class MsClientImpl implements MsClient {
 
 
   @Override
-  public void addHandler(MessageType type, RequestHandler requestHandler) {
+  public void addHandler(MessageType type, UniversalMessageHandler requestHandler) {
     this.handlers.put(type.getValue(), requestHandler);
   }
 
@@ -45,7 +45,7 @@ public class MsClientImpl implements MsClient {
   public void handle(Message msg) {
     log.info("new message:{}", msg);
     try {
-      RequestHandler requestHandler = handlers.get(msg.getType());
+      UniversalMessageHandler requestHandler = handlers.get(msg.getType());
       if (requestHandler != null) {
         requestHandler.handle(msg).ifPresent(this::sendMessage);
       } else {
