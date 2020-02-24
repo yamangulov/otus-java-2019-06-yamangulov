@@ -26,7 +26,6 @@
         <module>hw13-dependency-injection</module>
         <module>hw14-numbers-sequence</module>
         <module>hw15-message-system</module>
-        <module>hw16</module>
     </modules>
 
     <description>Homeworks of Java developer course</description>
