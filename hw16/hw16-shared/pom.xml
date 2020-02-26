@@ -13,14 +13,6 @@
     <version>1.0-SNAPSHOT</version>
     <description>Shared classes</description>
 
-    <properties>
-
-        <start-class>ru.otus.App</start-class>
-
-        <spring-boot-dependencies.version>2.2.4.RELEASE</spring-boot-dependencies.version>
-
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,9 +38,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot-dependencies.version}</version>
                 <configuration>
                     <addResources>true</addResources>
+                    <classifier>spring-boot</classifier>
                     <mainClass>${start-class}</mainClass>
                     <layout>JAR</layout>
                 </configuration>

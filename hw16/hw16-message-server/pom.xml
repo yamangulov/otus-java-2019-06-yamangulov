@@ -33,13 +33,12 @@
 
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot-dependencies.version}</version>
                 <configuration>
                     <addResources>true</addResources>
+                    <classifier>spring-boot</classifier>
                     <mainClass>${start-class}</mainClass>
                     <layout>JAR</layout>
                 </configuration>
