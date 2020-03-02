@@ -13,14 +13,26 @@ import ru.otus.messagesystem.MsClientImpl;
 public class AppConfig {
 
     @Bean
-    @ConfigurationProperties(prefix = "frontend")
-    public MsClient frontendMsClient(MessageSystem messageSystem) {
+    @ConfigurationProperties(prefix = "frontend1")
+    public MsClient frontendMsClient1(MessageSystem messageSystem) {
         return new MsClientImpl(messageSystem);
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "dbserver")
-    public MsClient databaseMsClient(MessageSystem messageSystem) {
+    @ConfigurationProperties(prefix = "frontend2")
+    public MsClient frontendMsClient2(MessageSystem messageSystem) {
+        return new MsClientImpl(messageSystem);
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "dbserver1")
+    public MsClient databaseMsClient1(MessageSystem messageSystem) {
+        return new MsClientImpl(messageSystem);
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "dbserver2")
+    public MsClient databaseMsClient2(MessageSystem messageSystem) {
         return new MsClientImpl(messageSystem);
     }
 

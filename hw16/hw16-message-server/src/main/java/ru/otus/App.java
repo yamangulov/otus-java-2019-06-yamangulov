@@ -13,8 +13,7 @@ import ru.otus.sockets.MessageServer;
 public class App implements CommandLineRunner {
     private MessageServer messageServer;
 
-    public static void main(String[] args) {
-        log.info("args from ms main method {}", args);
+    public static void main(String... args) {
         SpringApplication.run(App.class, args);
     }
 

@@ -20,6 +20,7 @@ public class App implements CommandLineRunner {
     //для запуска frontend server точно в конце запуска App, когда все, что нужно, уже проинициализировано, смотри https://dzone.com/articles/spring-boot-applicationrunner-and-commandlinerunne
     @Override
     public void run(String... args) throws Exception {
+        log.info("args from front start {}", args);
         frontendServer.go();
     }
 }
