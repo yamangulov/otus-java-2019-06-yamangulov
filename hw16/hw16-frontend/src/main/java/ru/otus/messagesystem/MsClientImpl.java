@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component
 @Slf4j
 public class MsClientImpl implements MsClient {
 
@@ -18,7 +17,7 @@ public class MsClientImpl implements MsClient {
   private final Map<String, UniversalMessageHandler> handlers = new ConcurrentHashMap<>();
   private final FrontendClient frontendClient;
 
-  public MsClientImpl(@Value("${frontendServiceClientName}") String name, FrontendClient frontendClient) {
+  public MsClientImpl(String name, FrontendClient frontendClient) {
     this.name = name;
     this.frontendClient = frontendClient;
   }

@@ -18,7 +18,6 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
-@Component
 @Slf4j
 public class FrontendServiceImpl implements FrontendService {
 
@@ -28,7 +27,7 @@ public class FrontendServiceImpl implements FrontendService {
     private final MsClient msClient;
     private final String databaseServiceClientName;
 
-    public FrontendServiceImpl(MsClient msClient, @Value("${databaseServiceClientName}") String databaseServiceClientName) {
+    public FrontendServiceImpl(MsClient msClient, String databaseServiceClientName) {
         this.msClient = msClient;
         this.databaseServiceClientName = databaseServiceClientName;
     }

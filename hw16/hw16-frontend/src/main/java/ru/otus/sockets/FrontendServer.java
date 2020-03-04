@@ -10,7 +10,6 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-@Component
 @Slf4j
 public class FrontendServer {
 
@@ -18,7 +17,7 @@ public class FrontendServer {
 
     private int frontendSocketServerPort;
 
-    public FrontendServer(@Value("${frontendSocketServer.port}") int frontendSocketServerPort, FrontendService frontendService) {
+    public FrontendServer(int frontendSocketServerPort, FrontendService frontendService) {
         this.frontendSocketServerPort = frontendSocketServerPort;
         this.frontendService = frontendService;
     }

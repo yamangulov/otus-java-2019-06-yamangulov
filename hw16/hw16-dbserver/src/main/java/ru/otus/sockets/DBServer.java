@@ -2,6 +2,7 @@ package ru.otus.sockets;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import ru.otus.messagesystem.Message;
 import ru.otus.messagesystem.MsClient;
@@ -10,7 +11,7 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-@Component
+
 @Slf4j
 public class DBServer {
 
@@ -18,7 +19,7 @@ public class DBServer {
     private int dbServerPort;
 
 
-    public DBServer(MsClient dbServerMsClient, @Value("${dbServer.port}") int dbServerPort) {
+    public DBServer(MsClient dbServerMsClient, int dbServerPort) {
         this.dbServerMsClient = dbServerMsClient;
         this.dbServerPort = dbServerPort;
     }

@@ -9,7 +9,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.TimeUnit;
 
-@Component
 @Slf4j
 public class FrontendClient {
     @Value("${messageServer.port}")
