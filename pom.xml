@@ -42,7 +42,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <com.google.guava.version>28.0-jre</com.google.guava.version>
+        <com.google.guava.version>29.0-jre</com.google.guava.version>
         <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
 
         <jetty.version>9.4.24.v20191120</jetty.version>
